@@ -77,11 +77,22 @@ Ties: 558 (18.33%)
 ## Example
 
 ```sh
-cargo run --release -- -n 1 -m 1 --min-decks=4 --max-decks=4 --min-suits=4 --max-suits=4 --min-cards-per-suit=13 --max-car
-ds-per-suit=13
+cargo run --release -- \
+    -n 1 -m 1 \
+    --min-decks=4 \
+    --max-decks=4 \
+    --min-suits=4 \
+    --max-suits=4 \
+    --min-cards-per-suit=13 \
+    --max-cards-per-suit=13
+```
+
+```
     Finished `release` profile [optimized] target(s) in 0.07s
      Running `target/release/generate-data -n 1 -m 1 --min-decks=4 --max-decks=4 --min-suits=4 --max-suits=4 --min-cards-per-suit=13 --max-cards-per-suit=13`
-█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████ 1/1User wins: 15 (44.12%)
+    
+████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████ 1/1
+User wins: 15 (44.12%)
 Dealer wins: 12 (35.29%)
 Ties: 7 (20.59%)
 ```
