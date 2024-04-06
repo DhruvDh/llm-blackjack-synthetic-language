@@ -65,10 +65,7 @@ impl Deck {
     }
 
     fn draw(&mut self) -> Option<Card> {
-        self.cards.pop().map(|card| {
-            self.card_counter.update(card);
-            card
-        })
+        self.cards.pop()
     }
 
     fn remaining_cards(&self) -> usize {
@@ -204,8 +201,8 @@ impl<'a> Round<'a> {
                 total_value: self.hand_value(&self.player_hand),
             },
         });
-        // self.deck.card_counter.update(self.player_hand[0]);
-        // self.deck.card_counter.update(self.player_hand[1]);
+        self.deck.card_counter.update(self.player_hand[0]);
+        self.deck.card_counter.update(self.player_hand[1]);
         events.push(Event::Info {
             game_id: self.game.game_id,
             event:   InfoEvent::Hand {
@@ -214,7 +211,7 @@ impl<'a> Round<'a> {
                 total_value: self.hand_value(&[self.dealer_hand[0]]),
             },
         });
-        // self.deck.card_counter.update(self.dealer_hand[0]);
+        self.deck.card_counter.update(self.dealer_hand[0]);
 
         while self.player_should_hit().is_ok_and(|should_hit| should_hit) {
             if let Some(card) = self.deck.draw() {
@@ -233,7 +230,7 @@ impl<'a> Round<'a> {
                     event:   ActionEvent::Hits(Player::User, card),
                 });
                 self.player_hand.push(card);
-                // self.deck.card_counter.update(card);
+                self.deck.card_counter.update(card);
             } else {
                 events.push(Event::GameTied {
                     game_id: self.game.game_id,
@@ -285,7 +282,7 @@ impl<'a> Round<'a> {
                         event:   ActionEvent::Hits(Player::Dealer, card),
                     });
                     self.dealer_hand.push(card);
-                    // self.deck.card_counter.update(card);
+                    self.deck.card_counter.update(card);
                 } else {
                     events.push(Event::GameTied {
                         game_id: self.game.game_id,
@@ -366,7 +363,7 @@ impl<'a> Round<'a> {
     }
 
     fn calculate_probabilities(&self) -> (f64, f64) {
-        let remaining_cards = self.deck.remaining_cards();
+        let remaining_cards = self.deck.card_counter.counts.values().sum::<usize>();
         let mut bust_prob = 0.0;
         let mut player_improvement_prob = 0.0;
 
