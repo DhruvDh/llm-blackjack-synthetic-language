@@ -95,6 +95,8 @@ enum InfoEvent {
         improvement: String,
         bust:        String,
     },
+    Busts(Player),
+    Wins(Player),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -102,8 +104,6 @@ enum InfoEvent {
 enum ActionEvent {
     Hits(Player, Card),
     Stands(Player),
-    Busts(Player),
-    Wins(Player),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -266,13 +266,13 @@ impl<'a> Round<'a> {
 
         let (_, player_hard_value) = self.hand_value(&self.player_hand);
         if player_hard_value > self.game.target_score {
-            events.push(Event::Action {
+            events.push(Event::Info {
                 game_id: self.game.game_id,
-                event:   ActionEvent::Busts(Player::User),
+                event:   InfoEvent::Busts(Player::User),
             });
-            events.push(Event::Action {
+            events.push(Event::Info {
                 game_id: self.game.game_id,
-                event:   ActionEvent::Wins(Player::Dealer),
+                event:   InfoEvent::Wins(Player::Dealer),
             });
         } else {
             while {
@@ -317,23 +317,23 @@ impl<'a> Round<'a> {
             };
 
             if dealer_hard_value > self.game.target_score {
-                events.push(Event::Action {
+                events.push(Event::Info {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Busts(Player::Dealer),
+                    event:   InfoEvent::Busts(Player::Dealer),
                 });
-                events.push(Event::Action {
+                events.push(Event::Info {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Wins(Player::User),
+                    event:   InfoEvent::Wins(Player::User),
                 });
             } else if player_score > dealer_score {
-                events.push(Event::Action {
+                events.push(Event::Info {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Wins(Player::User),
+                    event:   InfoEvent::Wins(Player::User),
                 });
             } else if dealer_score > player_score {
-                events.push(Event::Action {
+                events.push(Event::Info {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Wins(Player::Dealer),
+                    event:   InfoEvent::Wins(Player::Dealer),
                 });
             } else {
                 events.push(Event::Tie {
