@@ -1,0 +1,16 @@
+[package]
+name = "generate-data"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bpaf = { version = "0.9.11", features = ["bpaf_derive", "derive"] }
+futures = "0.3.30"
+indicatif = "0.17.8"
+rand = "0.8.5"
+rand_chacha = { version = "0.3.1", features = ["std", "serde", "simd"] }
+serde = "1.0.197"
+serde_derive = "1.0.197"
+serde_json = "1.0.115"
+thiserror = "1.0.58"
+tokio = { version = "1.37.0", features = ["full"] }
