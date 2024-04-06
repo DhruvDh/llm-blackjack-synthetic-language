@@ -106,8 +106,8 @@ enum InfoEvent {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
 enum ActionEvent {
-    Hits(Player, Card),
-    Stands(Player),
+    Hits { player: Player, card: Card },
+    Stands { player: Player },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -233,7 +233,10 @@ impl<'a> Round<'a> {
 
                 events.push(Event::Action {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Hits(Player::User, card),
+                    event:   ActionEvent::Hits {
+                        player: Player::User,
+                        card,
+                    },
                 });
                 self.player_hand.push(card);
                 self.deck.card_counter.update(card);
@@ -266,7 +269,9 @@ impl<'a> Round<'a> {
         });
         events.push(Event::Action {
             game_id: self.game.game_id,
-            event:   ActionEvent::Stands(Player::User),
+            event:   ActionEvent::Stands {
+                player: Player::User,
+            },
         });
         events.push(Event::Info {
             game_id: self.game.game_id,
@@ -292,7 +297,10 @@ impl<'a> Round<'a> {
             if let Some(card) = self.deck.draw() {
                 events.push(Event::Action {
                     game_id: self.game.game_id,
-                    event:   ActionEvent::Hits(Player::Dealer, card),
+                    event:   ActionEvent::Hits {
+                        player: Player::Dealer,
+                        card,
+                    },
                 });
                 self.dealer_hand.push(card);
                 self.deck.card_counter.update(card);
@@ -312,7 +320,9 @@ impl<'a> Round<'a> {
 
         events.push(Event::Action {
             game_id: self.game.game_id,
-            event:   ActionEvent::Stands(Player::Dealer),
+            event:   ActionEvent::Stands {
+                player: Player::Dealer,
+            },
         });
         events.push(Event::Info {
             game_id: self.game.game_id,
