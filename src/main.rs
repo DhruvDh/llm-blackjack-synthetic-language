@@ -126,9 +126,6 @@ enum Event {
         game_id: usize,
         event:   ActionEvent,
     },
-    Tie {
-        game_id: usize,
-    },
     GameTied {
         game_id: usize,
     },
@@ -333,7 +330,7 @@ impl<'a> Round<'a> {
                     event:   InfoEvent::Wins(Player::Dealer),
                 });
             } else {
-                events.push(Event::Tie {
+                events.push(Event::GameTied {
                     game_id: self.game.game_id,
                 });
             }
