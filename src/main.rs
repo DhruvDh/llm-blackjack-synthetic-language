@@ -37,6 +37,26 @@ struct Deck {
     card_counter:       CardCounter,
 }
 
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+struct HandValue {
+    soft: usize,
+    hard: usize,
+}
+
+impl HandValue {
+    fn get_score(&self, target_score: usize) -> usize {
+        if self.soft > target_score && self.hard > target_score {
+            self.soft.min(self.hard)
+        } else if self.soft <= target_score && self.hard <= target_score {
+            self.soft.max(self.hard)
+        } else if self.soft <= target_score {
+            self.soft
+        } else {
+            self.hard
+        }
+    }
+}
+
 impl Deck {
     fn new(num_suits: usize, num_cards_per_suit: usize, num_decks: usize) -> Self {
         let mut cards = Vec::new();
@@ -85,7 +105,7 @@ enum InfoEvent {
     Hand {
         player:      Player,
         cards:       Vec<Card>,
-        total_value: (usize, usize),
+        total_value: HandValue,
     },
     Probabilities {
         player:      Player,
@@ -158,7 +178,9 @@ impl CardCounter {
 
     fn update(&mut self, card: Card) {
         let count = self.counts.get_mut(&card.value).unwrap();
-        *count -= 1;
+        if (*count) > 0 {
+            *count -= 1;
+        }
     }
 
     fn get_count(&self, value: usize) -> usize {
@@ -250,10 +272,7 @@ impl<'a> Round<'a> {
             }
 
             let hand_values = self.hand_value(&self.player_hand);
-            if (hand_values.0 > self.game.target_score && hand_values.1 > self.game.target_score)
-                || (hand_values.0 == self.game.target_score
-                    || hand_values.1 == self.game.target_score)
-            {
+            if hand_values.get_score(self.game.target_score) >= self.game.target_score {
                 break;
             }
         }
@@ -282,15 +301,13 @@ impl<'a> Round<'a> {
             },
         });
 
-        let (player_soft_value, player_hard_value) = self.hand_value(&self.player_hand);
-        let (mut dealer_soft_value, mut dealer_hard_value) = self.hand_value(&self.dealer_hand);
+        let player_hand = self.hand_value(&self.player_hand);
+        let mut dealer_hand = self.hand_value(&self.dealer_hand);
 
-        while dealer_soft_value < self.game.dealer_threshold
-            || dealer_hard_value < self.game.dealer_threshold
+        while dealer_hand.soft < self.game.dealer_threshold
+            || dealer_hand.hard < self.game.dealer_threshold
         {
-            if dealer_soft_value == self.game.target_score
-                || dealer_hard_value == self.game.target_score
-            {
+            if dealer_hand.get_score(self.game.target_score) == self.game.target_score {
                 break;
             }
 
@@ -305,9 +322,7 @@ impl<'a> Round<'a> {
                 self.dealer_hand.push(card);
                 self.deck.card_counter.update(card);
 
-                let hand_values = self.hand_value(&self.dealer_hand);
-                dealer_soft_value = hand_values.0;
-                dealer_hard_value = hand_values.1;
+                dealer_hand = self.hand_value(&self.dealer_hand);
             } else {
                 events.push(Event::GameTied {
                     game_id:      self.game.game_id,
@@ -333,34 +348,9 @@ impl<'a> Round<'a> {
             },
         });
 
-        let (dealer_soft_value, dealer_hard_value) = self.hand_value(&self.dealer_hand);
-        let user_score = if self.game.target_score.abs_diff(player_soft_value)
-            < self.game.target_score.abs_diff(player_hard_value)
-        {
-            if player_soft_value <= self.game.target_score {
-                player_soft_value
-            } else {
-                player_hard_value
-            }
-        } else if player_hard_value <= self.game.target_score {
-            player_hard_value
-        } else {
-            player_soft_value
-        };
-
-        let dealer_score = if self.game.target_score.abs_diff(dealer_soft_value)
-            < self.game.target_score.abs_diff(dealer_hard_value)
-        {
-            if dealer_soft_value <= self.game.target_score {
-                dealer_soft_value
-            } else {
-                dealer_hard_value
-            }
-        } else if dealer_hard_value <= self.game.target_score {
-            dealer_hard_value
-        } else {
-            dealer_soft_value
-        };
+        let dealer_hand = self.hand_value(&self.dealer_hand);
+        let user_score = player_hand.get_score(self.game.target_score);
+        let dealer_score = dealer_hand.get_score(self.game.target_score);
 
         if dealer_score > self.game.target_score && user_score > self.game.target_score {
             events.push(Event::Info {
@@ -443,7 +433,7 @@ impl<'a> Round<'a> {
         events
     }
 
-    fn hand_value(&self, cards: &[Card]) -> (usize, usize) {
+    fn hand_value(&self, cards: &[Card]) -> HandValue {
         let (total, aces) = cards.iter().fold((0, 0), |(total, aces), card| {
             if card.value == 1 {
                 (total + 1, aces + 1)
@@ -453,13 +443,15 @@ impl<'a> Round<'a> {
         });
 
         if aces > 0 {
-            if total + 10 <= self.game.target_score {
-                (total + 10, total)
-            } else {
-                (total, total)
+            HandValue {
+                soft: total,
+                hard: total + 10,
             }
         } else {
-            (total, total)
+            HandValue {
+                soft: total,
+                hard: total,
+            }
         }
     }
 
@@ -476,14 +468,12 @@ impl<'a> Round<'a> {
                 value: card_value,
             }]]
             .concat();
-            let (total_soft_value, total_hard_value) = self.hand_value(&new_player_hand);
+            let hand_value = self.hand_value(&new_player_hand);
 
-            if total_soft_value > self.game.target_score {
+            if hand_value.get_score(self.game.target_score) > self.game.target_score {
                 bust_prob += prob;
-            } else if total_hard_value <= self.game.target_score {
-                player_improvement_prob += prob;
             } else {
-                bust_prob += prob;
+                player_improvement_prob += prob;
             }
         }
 
