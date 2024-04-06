@@ -21,6 +21,8 @@ Available options:
 
 ## Information
 
+> Note: This is a variant of Blackjack, and standard rules do not apply. Win rates should not be compared to standard Blackjack.
+
 For implementation:
 
 ```rs
@@ -67,7 +69,7 @@ For implementation:
 The winrates are:
 
 ```
-User wins: 746155 (43.37%)
-Dealer wins: 886154 (51.51%)
-Ties: 88160 (5.12%)
+User wins: 1339 (43.99%)
+Dealer wins: 1147 (37.68%)
+Ties: 558 (18.33%)
 ```

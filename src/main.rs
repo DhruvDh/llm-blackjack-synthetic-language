@@ -92,8 +92,15 @@ enum InfoEvent {
         improvement: String,
         bust:        String,
     },
-    Busts(Player),
-    Wins(Player),
+    Busts {
+        player: Player,
+        score:  usize,
+    },
+    Wins {
+        player:       Player,
+        user_score:   usize,
+        dealer_score: usize,
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -127,7 +134,9 @@ enum Event {
         event:   ActionEvent,
     },
     GameTied {
-        game_id: usize,
+        game_id:      usize,
+        user_score:   usize,
+        dealer_score: usize,
     },
 }
 
@@ -230,9 +239,19 @@ impl<'a> Round<'a> {
                 self.deck.card_counter.update(card);
             } else {
                 events.push(Event::GameTied {
-                    game_id: self.game.game_id,
+                    game_id:      self.game.game_id,
+                    user_score:   0,
+                    dealer_score: 0,
                 });
                 return events;
+            }
+
+            let hand_values = self.hand_value(&self.player_hand);
+            if (hand_values.0 > self.game.target_score && hand_values.1 > self.game.target_score)
+                || (hand_values.0 == self.game.target_score
+                    || hand_values.1 == self.game.target_score)
+            {
+                break;
             }
         }
 
@@ -258,82 +277,157 @@ impl<'a> Round<'a> {
             },
         });
 
-        let (_, player_hard_value) = self.hand_value(&self.player_hand);
-        if player_hard_value > self.game.target_score {
-            events.push(Event::Info {
-                game_id: self.game.game_id,
-                event:   InfoEvent::Busts(Player::User),
-            });
-            events.push(Event::Info {
-                game_id: self.game.game_id,
-                event:   InfoEvent::Wins(Player::Dealer),
-            });
-        } else {
-            while {
-                let (_, dealer_hard_value) = self.hand_value(&self.dealer_hand);
-                dealer_hard_value < self.game.dealer_threshold
-            } {
-                if let Some(card) = self.deck.draw() {
-                    events.push(Event::Action {
-                        game_id: self.game.game_id,
-                        event:   ActionEvent::Hits(Player::Dealer, card),
-                    });
-                    self.dealer_hand.push(card);
-                    self.deck.card_counter.update(card);
-                } else {
-                    events.push(Event::GameTied {
-                        game_id: self.game.game_id,
-                    });
-                    return events;
-                }
+        let (player_soft_value, player_hard_value) = self.hand_value(&self.player_hand);
+        let (mut dealer_soft_value, mut dealer_hard_value) = self.hand_value(&self.dealer_hand);
+
+        while dealer_soft_value < self.game.dealer_threshold
+            || dealer_hard_value < self.game.dealer_threshold
+        {
+            if dealer_soft_value == self.game.target_score
+                || dealer_hard_value == self.game.target_score
+            {
+                break;
             }
 
-            events.push(Event::Action {
-                game_id: self.game.game_id,
-                event:   ActionEvent::Stands(Player::Dealer),
-            });
-            events.push(Event::Info {
-                game_id: self.game.game_id,
-                event:   InfoEvent::Hand {
-                    player:      Player::Dealer,
-                    cards:       self.dealer_hand.clone(),
-                    total_value: self.hand_value(&self.dealer_hand),
-                },
-            });
+            if let Some(card) = self.deck.draw() {
+                events.push(Event::Action {
+                    game_id: self.game.game_id,
+                    event:   ActionEvent::Hits(Player::Dealer, card),
+                });
+                self.dealer_hand.push(card);
+                self.deck.card_counter.update(card);
 
-            let (player_soft_value, player_hard_value) = self.hand_value(&self.player_hand);
-            let (dealer_soft_value, dealer_hard_value) = self.hand_value(&self.dealer_hand);
-
-            let (player_score, dealer_score) = if player_soft_value <= self.game.target_score {
-                (player_soft_value, dealer_soft_value)
-            } else {
-                (player_hard_value, dealer_hard_value)
-            };
-
-            if dealer_hard_value > self.game.target_score {
-                events.push(Event::Info {
-                    game_id: self.game.game_id,
-                    event:   InfoEvent::Busts(Player::Dealer),
-                });
-                events.push(Event::Info {
-                    game_id: self.game.game_id,
-                    event:   InfoEvent::Wins(Player::User),
-                });
-            } else if player_score > dealer_score {
-                events.push(Event::Info {
-                    game_id: self.game.game_id,
-                    event:   InfoEvent::Wins(Player::User),
-                });
-            } else if dealer_score > player_score {
-                events.push(Event::Info {
-                    game_id: self.game.game_id,
-                    event:   InfoEvent::Wins(Player::Dealer),
-                });
+                let hand_values = self.hand_value(&self.dealer_hand);
+                dealer_soft_value = hand_values.0;
+                dealer_hard_value = hand_values.1;
             } else {
                 events.push(Event::GameTied {
-                    game_id: self.game.game_id,
+                    game_id:      self.game.game_id,
+                    user_score:   0,
+                    dealer_score: 0,
                 });
+                return events;
             }
+        }
+
+        events.push(Event::Action {
+            game_id: self.game.game_id,
+            event:   ActionEvent::Stands(Player::Dealer),
+        });
+        events.push(Event::Info {
+            game_id: self.game.game_id,
+            event:   InfoEvent::Hand {
+                player:      Player::Dealer,
+                cards:       self.dealer_hand.clone(),
+                total_value: self.hand_value(&self.dealer_hand),
+            },
+        });
+
+        let (dealer_soft_value, dealer_hard_value) = self.hand_value(&self.dealer_hand);
+        let user_score = if self.game.target_score.abs_diff(player_soft_value)
+            < self.game.target_score.abs_diff(player_hard_value)
+        {
+            if player_soft_value <= self.game.target_score {
+                player_soft_value
+            } else {
+                player_hard_value
+            }
+        } else if player_hard_value <= self.game.target_score {
+            player_hard_value
+        } else {
+            player_soft_value
+        };
+
+        let dealer_score = if self.game.target_score.abs_diff(dealer_soft_value)
+            < self.game.target_score.abs_diff(dealer_hard_value)
+        {
+            if dealer_soft_value <= self.game.target_score {
+                dealer_soft_value
+            } else {
+                dealer_hard_value
+            }
+        } else if dealer_hard_value <= self.game.target_score {
+            dealer_hard_value
+        } else {
+            dealer_soft_value
+        };
+
+        if dealer_score > self.game.target_score && user_score > self.game.target_score {
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Busts {
+                    player: Player::Dealer,
+                    score:  dealer_score,
+                },
+            });
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Busts {
+                    player: Player::User,
+                    score:  user_score,
+                },
+            });
+            events.push(Event::GameTied {
+                game_id: self.game.game_id,
+                user_score,
+                dealer_score,
+            });
+        } else if user_score > self.game.target_score {
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Busts {
+                    player: Player::User,
+                    score:  user_score,
+                },
+            });
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Wins {
+                    player: Player::Dealer,
+                    user_score,
+                    dealer_score,
+                },
+            });
+        } else if dealer_score > self.game.target_score {
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Busts {
+                    player: Player::Dealer,
+                    score:  dealer_score,
+                },
+            });
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Wins {
+                    player: Player::User,
+                    user_score,
+                    dealer_score,
+                },
+            });
+        } else if user_score == self.game.target_score || user_score > dealer_score {
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Wins {
+                    player: Player::User,
+                    user_score,
+                    dealer_score,
+                },
+            });
+        } else if dealer_score == self.game.target_score || dealer_score > user_score {
+            events.push(Event::Info {
+                game_id: self.game.game_id,
+                event:   InfoEvent::Wins {
+                    player: Player::Dealer,
+                    user_score,
+                    dealer_score,
+                },
+            });
+        } else {
+            events.push(Event::GameTied {
+                game_id: self.game.game_id,
+                user_score,
+                dealer_score,
+            });
         }
 
         events
@@ -584,15 +678,9 @@ async fn main() {
         .await
         .expect("Unable to read file");
 
-    let user_wins = contents.matches("Wins(User)").count();
-    let dealer_wins = contents.matches("Wins(Dealer)").count();
-    let ties = contents.matches("Tie {").count()
-        + contents
-            .matches(
-                "GameTied
-    {",
-            )
-            .count();
+    let user_wins = contents.matches("Wins { player: User").count();
+    let dealer_wins = contents.matches("Wins { player: Dealer").count();
+    let ties = contents.matches("GameTied {").count();
     let total_games = user_wins + dealer_wins + ties;
 
     println!(
