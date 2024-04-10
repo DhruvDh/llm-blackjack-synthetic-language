@@ -18,9 +18,13 @@ use tokenizers::{
     NormalizerWrapper,
     Result,
     TokenizerBuilder,
+    TokenizerImpl,
 };
 
-pub fn create_tokenizer(transcript_file: &str, output_prefix: String) -> Result<()> {
+pub fn create_tokenizer(
+    transcript_file: &str,
+    output_prefix: String,
+) -> Result<TokenizerImpl<BPE, Sequence, Split, ByteLevel, ByteLevel>> {
     let mut trainer = BpeTrainerBuilder::new()
         .show_progress(true)
         .vocab_size(9999)
@@ -53,5 +57,5 @@ pub fn create_tokenizer(transcript_file: &str, output_prefix: String) -> Result<
         .train_from_files(&mut trainer, vec![transcript_file.to_string()])?
         .save(output_prefix + "-tokenizer.json", pretty)?;
 
-    Ok(())
+    Ok(tokenizer)
 }

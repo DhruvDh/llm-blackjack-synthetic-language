@@ -3,9 +3,17 @@ use futures::{
     stream::FuturesUnordered,
     StreamExt,
 };
+use num_format::ToFormattedString;
 use tokio::{
-    fs::OpenOptions,
-    io::AsyncWriteExt,
+    fs::{
+        File,
+        OpenOptions,
+    },
+    io::{
+        AsyncBufReadExt,
+        AsyncWriteExt,
+        BufReader,
+    },
 };
 
 mod blackjack;
@@ -49,7 +57,7 @@ struct Config {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     let config = config().run();
 
     let file_path = config.output.clone() + ".txt";
@@ -108,23 +116,56 @@ async fn main() {
     let total_games = user_wins + dealer_wins + ties;
 
     println!(
-        "User wins: {} ({:.2}%)",
-        user_wins,
+        "User wins:\t{} ({:.2}%)",
+        user_wins.to_formatted_string(&num_format::Locale::en),
         user_wins as f64 / total_games as f64 * 100.0
     );
     println!(
-        "Dealer wins: {} ({:.2}%)",
-        dealer_wins,
+        "Dealer wins:\t{} ({:.2}%)",
+        dealer_wins.to_formatted_string(&num_format::Locale::en),
         dealer_wins as f64 / total_games as f64 * 100.0
     );
     println!(
-        "Ties: {} ({:.2}%)",
-        ties,
+        "Ties:\t\t{} ({:.2}%)",
+        ties.to_formatted_string(&num_format::Locale::en),
         ties as f64 / total_games as f64 * 100.0
     );
+    println!(
+        "Total games:\t{}",
+        total_games.to_formatted_string(&num_format::Locale::en)
+    );
 
-    match create_tokenizer(&file_path, config.output.clone()) {
-        Ok(_) => println!("Tokenizer created successfully."),
-        Err(e) => eprintln!("Error creating tokenizer: {}", e),
+    println!("Creating tokenizer...");
+    let tokenizer = create_tokenizer(&file_path, config.output.clone()).unwrap();
+
+    println!("Counting tokens... (feel free to interrupt)");
+    let num_threads = std::thread::available_parallelism()?.get();
+
+    let file = File::open(file_path).await?;
+    let mut num_tokens = 0;
+    let mut reader = BufReader::new(file);
+
+    'outer: loop {
+        for _ in 0..(num_threads * 1024) {
+            let mut batch = Vec::with_capacity(num_threads);
+            let mut buffer = String::new();
+            let line = reader.read_line(&mut buffer).await?;
+            if line == 0 {
+                break 'outer;
+            }
+            batch.push(buffer.clone());
+
+            let encoding = tokenizer.encode_batch(batch, false).unwrap_or_default();
+
+            for enc in encoding {
+                num_tokens += enc.get_ids().len();
+            }
+        }
     }
+
+    println!(
+        "Number of tokens: {}",
+        num_tokens.to_formatted_string(&num_format::Locale::en)
+    );
+    Ok(())
 }

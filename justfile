@@ -1,2 +1,2 @@
 test:
-  rm blackjack_transcripts.txt && cargo run --release -- -n 2 -m 4
+  rm blackjack_transcripts.txt && cargo run --release -- -n 100 -m 2

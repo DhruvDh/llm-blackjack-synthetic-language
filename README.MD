@@ -96,433 +96,434 @@ Ties: 8 (24.24%)
 
 ## Generated Data
 
+Average number of tokens per game: ~620 tokens
+
 ```
-GameStart { game_id: 0, num_suits: 4, num_cards_per_suit: 13, num_decks: 4, target_score: 22, dealer_threshold: 18 }
-RoundStart { game_id: 0, round_id: 0 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 2, value: 7 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 7 }], total_value: HandValue { soft: 7, hard: 7 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "***", bust: "*******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 2, value: 7 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 12 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 7 }, Card { suit: 1, value: 9 }, Card { suit: 0, value: 12 }], total_value: HandValue { soft: 28, hard: 28 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 28 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 18, dealer_score: 28 } }
-RoundStart { game_id: 0, round_id: 1 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 5 }, Card { suit: 1, value: 3 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 7 }], total_value: HandValue { soft: 7, hard: 7 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**", bust: "********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 5 }, Card { suit: 1, value: 3 }, Card { suit: 3, value: 12 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 7 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 8 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 7 }, Card { suit: 1, value: 2 }, Card { suit: 3, value: 7 }, Card { suit: 3, value: 8 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 24 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 20, dealer_score: 24 } }
-RoundStart { game_id: 0, round_id: 2 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 9 }, Card { suit: 2, value: 1 }], total_value: HandValue { soft: 10, hard: 20 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 1 }], total_value: HandValue { soft: 1, hard: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*********", bust: "*" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*", bust: "*********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 9 }, Card { suit: 2, value: 1 }, Card { suit: 3, value: 11 }], total_value: HandValue { soft: 21, hard: 31 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 8 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 13 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 1 }, Card { suit: 0, value: 5 }, Card { suit: 0, value: 8 }, Card { suit: 1, value: 13 }], total_value: HandValue { soft: 27, hard: 37 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 27 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 21, dealer_score: 27 } }
-RoundStart { game_id: 0, round_id: 3 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 9 }, Card { suit: 1, value: 11 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 13 }], total_value: HandValue { soft: 13, hard: 13 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**", bust: "********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 9 }, Card { suit: 1, value: 11 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 13 }, Card { suit: 2, value: 13 }], total_value: HandValue { soft: 26, hard: 26 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 26 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 20, dealer_score: 26 } }
-RoundStart { game_id: 0, round_id: 4 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 4 }, Card { suit: 1, value: 13 }], total_value: HandValue { soft: 17, hard: 17 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 5 }], total_value: HandValue { soft: 5, hard: 5 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "****", bust: "******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 4 }, Card { suit: 1, value: 13 }], total_value: HandValue { soft: 17, hard: 17 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 9 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 5 }, Card { suit: 1, value: 5 }, Card { suit: 2, value: 9 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 17, dealer_score: 19 } }
-RoundStart { game_id: 0, round_id: 5 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 8 }, Card { suit: 2, value: 7 }], total_value: HandValue { soft: 15, hard: 15 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 4 }], total_value: HandValue { soft: 4, hard: 4 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 13 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 8 }, Card { suit: 2, value: 7 }, Card { suit: 2, value: 13 }], total_value: HandValue { soft: 28, hard: 28 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 13 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 4 }, Card { suit: 2, value: 3 }, Card { suit: 3, value: 13 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Info { game_id: 0, event: Busts { player: User, score: 28 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 28, dealer_score: 20 } }
-RoundStart { game_id: 0, round_id: 6 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 7 }, Card { suit: 1, value: 7 }], total_value: HandValue { soft: 14, hard: 14 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 12 }], total_value: HandValue { soft: 12, hard: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 10 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 7 }, Card { suit: 1, value: 7 }, Card { suit: 3, value: 10 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 13 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 12 }, Card { suit: 3, value: 2 }, Card { suit: 3, value: 13 }], total_value: HandValue { soft: 27, hard: 27 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 27 } }
-Info { game_id: 0, event: Busts { player: User, score: 24 } }
-GameTied { game_id: 0, user_score: 24, dealer_score: 27 }
-RoundStart { game_id: 0, round_id: 7 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 1, value: 9 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 9 }], total_value: HandValue { soft: 9, hard: 9 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**", bust: "********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 1, value: 9 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 9 }, Card { suit: 3, value: 12 }], total_value: HandValue { soft: 21, hard: 21 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 20, dealer_score: 21 } }
-RoundStart { game_id: 0, round_id: 8 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 7 }, Card { suit: 0, value: 8 }], total_value: HandValue { soft: 15, hard: 15 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 10 }], total_value: HandValue { soft: 10, hard: 10 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 3 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "***", bust: "*******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 7 }, Card { suit: 0, value: 8 }, Card { suit: 0, value: 3 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 8 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 10 }, Card { suit: 1, value: 6 }, Card { suit: 1, value: 8 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 24 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 18, dealer_score: 24 } }
-RoundStart { game_id: 0, round_id: 9 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 10 }, Card { suit: 2, value: 4 }], total_value: HandValue { soft: 14, hard: 14 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 5 }], total_value: HandValue { soft: 5, hard: 5 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 1, value: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 10 }, Card { suit: 2, value: 4 }, Card { suit: 1, value: 11 }], total_value: HandValue { soft: 25, hard: 25 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 1 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 7 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 11 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 5 }, Card { suit: 0, value: 2 }, Card { suit: 0, value: 1 }, Card { suit: 2, value: 7 }, Card { suit: 1, value: 11 }], total_value: HandValue { soft: 26, hard: 36 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 26 } }
-Info { game_id: 0, event: Busts { player: User, score: 25 } }
-GameTied { game_id: 0, user_score: 25, dealer_score: 26 }
-RoundStart { game_id: 0, round_id: 10 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 4 }, Card { suit: 3, value: 12 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 9 }], total_value: HandValue { soft: 9, hard: 9 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 9 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 4 }, Card { suit: 3, value: 12 }, Card { suit: 0, value: 9 }], total_value: HandValue { soft: 25, hard: 25 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 9 }, Card { suit: 2, value: 9 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Info { game_id: 0, event: Busts { player: User, score: 25 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 25, dealer_score: 18 } }
-RoundStart { game_id: 0, round_id: 11 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 9 }, Card { suit: 1, value: 12 }], total_value: HandValue { soft: 21, hard: 21 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 4 }], total_value: HandValue { soft: 4, hard: 4 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*", bust: "*********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 9 }, Card { suit: 1, value: 12 }], total_value: HandValue { soft: 21, hard: 21 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 9 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 4 }, Card { suit: 3, value: 5 }, Card { suit: 1, value: 9 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Info { game_id: 0, event: Wins { player: User, user_score: 21, dealer_score: 18 } }
-RoundStart { game_id: 0, round_id: 12 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 4 }, Card { suit: 2, value: 1 }], total_value: HandValue { soft: 5, hard: 15 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 12 }], total_value: HandValue { soft: 12, hard: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 13 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "****", bust: "******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 4 }, Card { suit: 2, value: 1 }, Card { suit: 3, value: 13 }], total_value: HandValue { soft: 18, hard: 28 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 12 }, Card { suit: 0, value: 6 }], total_value: HandValue { soft: 18, hard: 18 } } }
-GameTied { game_id: 0, user_score: 18, dealer_score: 18 }
-RoundStart { game_id: 0, round_id: 13 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 0, value: 10 }], total_value: HandValue { soft: 13, hard: 13 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 12 }], total_value: HandValue { soft: 12, hard: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 6 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "***", bust: "*******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 0, value: 10 }, Card { suit: 2, value: 6 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 6 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 12 }, Card { suit: 3, value: 5 }, Card { suit: 0, value: 6 }], total_value: HandValue { soft: 23, hard: 23 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 23 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 19, dealer_score: 23 } }
-RoundStart { game_id: 0, round_id: 14 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 7 }, Card { suit: 1, value: 8 }], total_value: HandValue { soft: 15, hard: 15 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 13 }], total_value: HandValue { soft: 13, hard: 13 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 7 }, Card { suit: 1, value: 8 }, Card { suit: 2, value: 12 }], total_value: HandValue { soft: 27, hard: 27 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 13 }, Card { suit: 3, value: 9 }], total_value: HandValue { soft: 22, hard: 22 } } }
-Info { game_id: 0, event: Busts { player: User, score: 27 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 27, dealer_score: 22 } }
-RoundStart { game_id: 0, round_id: 15 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 10 }, Card { suit: 2, value: 5 }], total_value: HandValue { soft: 15, hard: 15 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 8 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 10 }, Card { suit: 2, value: 5 }, Card { suit: 0, value: 11 }], total_value: HandValue { soft: 26, hard: 26 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 13 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 8 }, Card { suit: 1, value: 8 }, Card { suit: 1, value: 13 }], total_value: HandValue { soft: 29, hard: 29 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 29 } }
-Info { game_id: 0, event: Busts { player: User, score: 26 } }
-GameTied { game_id: 0, user_score: 26, dealer_score: 29 }
-RoundStart { game_id: 0, round_id: 16 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 2 }, Card { suit: 1, value: 1 }], total_value: HandValue { soft: 3, hard: 13 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 6 }], total_value: HandValue { soft: 6, hard: 6 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 10 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 2 }, Card { suit: 1, value: 1 }, Card { suit: 0, value: 11 }, Card { suit: 2, value: 10 }], total_value: HandValue { soft: 24, hard: 34 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 4 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 6 }, Card { suit: 0, value: 9 }, Card { suit: 0, value: 4 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Info { game_id: 0, event: Busts { player: User, score: 24 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 24, dealer_score: 19 } }
-RoundStart { game_id: 0, round_id: 17 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 10 }, Card { suit: 0, value: 4 }], total_value: HandValue { soft: 14, hard: 14 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 13 }], total_value: HandValue { soft: 13, hard: 13 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 10 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 10 }, Card { suit: 0, value: 4 }, Card { suit: 0, value: 10 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 10 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 13 }, Card { suit: 3, value: 2 }, Card { suit: 0, value: 10 }], total_value: HandValue { soft: 25, hard: 25 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 25 } }
-Info { game_id: 0, event: Busts { player: User, score: 24 } }
-GameTied { game_id: 0, user_score: 24, dealer_score: 25 }
-RoundStart { game_id: 0, round_id: 18 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 3, value: 11 }], total_value: HandValue { soft: 14, hard: 14 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 8 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 1, value: 3 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 3, value: 11 }, Card { suit: 1, value: 3 }], total_value: HandValue { soft: 17, hard: 17 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 8 }, Card { suit: 0, value: 13 }], total_value: HandValue { soft: 21, hard: 21 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 17, dealer_score: 21 } }
-RoundStart { game_id: 0, round_id: 19 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 6 }, Card { suit: 2, value: 6 }], total_value: HandValue { soft: 12, hard: 12 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 2 }], total_value: HandValue { soft: 2, hard: 2 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "********", bust: "**" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 1, value: 6 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "****", bust: "******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 6 }, Card { suit: 2, value: 6 }, Card { suit: 1, value: 6 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 5 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 5 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 2 }, Card { suit: 0, value: 7 }, Card { suit: 2, value: 5 }, Card { suit: 2, value: 5 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 18, dealer_score: 19 } }
-RoundStart { game_id: 0, round_id: 20 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 7 }, Card { suit: 0, value: 1 }], total_value: HandValue { soft: 8, hard: 18 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 7 }], total_value: HandValue { soft: 7, hard: 7 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 5 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*", bust: "*********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 7 }, Card { suit: 0, value: 1 }, Card { suit: 2, value: 5 }, Card { suit: 0, value: 8 }], total_value: HandValue { soft: 21, hard: 31 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 4 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 1 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 7 }, Card { suit: 0, value: 6 }, Card { suit: 3, value: 4 }, Card { suit: 3, value: 1 }], total_value: HandValue { soft: 18, hard: 28 } } }
-Info { game_id: 0, event: Wins { player: User, user_score: 21, dealer_score: 18 } }
-RoundStart { game_id: 0, round_id: 21 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 5 }, Card { suit: 2, value: 11 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 1 }], total_value: HandValue { soft: 1, hard: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 5 }, Card { suit: 2, value: 11 }, Card { suit: 2, value: 12 }], total_value: HandValue { soft: 28, hard: 28 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 10 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 1 }, Card { suit: 3, value: 10 }, Card { suit: 1, value: 10 }], total_value: HandValue { soft: 21, hard: 31 } } }
-Info { game_id: 0, event: Busts { player: User, score: 28 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 28, dealer_score: 21 } }
-RoundStart { game_id: 0, round_id: 22 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 5 }, Card { suit: 1, value: 1 }], total_value: HandValue { soft: 6, hard: 16 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 1 }], total_value: HandValue { soft: 1, hard: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 1 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 1, value: 4 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "***", bust: "*******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 5 }, Card { suit: 1, value: 1 }, Card { suit: 0, value: 8 }, Card { suit: 0, value: 1 }, Card { suit: 1, value: 4 }], total_value: HandValue { soft: 19, hard: 29 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 11 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 2 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 1 }, Card { suit: 3, value: 4 }, Card { suit: 3, value: 11 }, Card { suit: 2, value: 2 }], total_value: HandValue { soft: 18, hard: 28 } } }
-Info { game_id: 0, event: Wins { player: User, user_score: 19, dealer_score: 18 } }
-RoundStart { game_id: 0, round_id: 23 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 2 }, Card { suit: 3, value: 6 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 4 }], total_value: HandValue { soft: 4, hard: 4 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 6 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 5 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "***", bust: "*******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 2 }, Card { suit: 3, value: 6 }, Card { suit: 3, value: 6 }, Card { suit: 0, value: 5 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 7 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 3 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 10 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 4 }, Card { suit: 2, value: 2 }, Card { suit: 3, value: 7 }, Card { suit: 0, value: 3 }, Card { suit: 3, value: 10 }], total_value: HandValue { soft: 26, hard: 26 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 26 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 19, dealer_score: 26 } }
-RoundStart { game_id: 0, round_id: 24 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 1, value: 10 }], total_value: HandValue { soft: 13, hard: 13 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 2 }], total_value: HandValue { soft: 2, hard: 2 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 2 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "******", bust: "****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 3 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "****", bust: "******" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 3 }, Card { suit: 1, value: 10 }, Card { suit: 0, value: 2 }, Card { suit: 0, value: 3 }], total_value: HandValue { soft: 18, hard: 18 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 3 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 10 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 2 }, Card { suit: 3, value: 6 }, Card { suit: 2, value: 3 }, Card { suit: 2, value: 10 }], total_value: HandValue { soft: 21, hard: 21 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 18, dealer_score: 21 } }
-RoundStart { game_id: 0, round_id: 25 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 7 }, Card { suit: 0, value: 3 }], total_value: HandValue { soft: 10, hard: 10 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 2 }], total_value: HandValue { soft: 2, hard: 2 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*********", bust: "*" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 0, value: 10 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**", bust: "********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 7 }, Card { suit: 0, value: 3 }, Card { suit: 0, value: 10 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 5 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 1 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 2 }, Card { suit: 2, value: 4 }, Card { suit: 0, value: 5 }, Card { suit: 3, value: 1 }], total_value: HandValue { soft: 12, hard: 22 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 20, dealer_score: 22 } }
-RoundStart { game_id: 0, round_id: 26 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 2 }, Card { suit: 1, value: 2 }], total_value: HandValue { soft: 4, hard: 4 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 9 }], total_value: HandValue { soft: 9, hard: 9 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 1, value: 9 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*******", bust: "***" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 3 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 2, value: 3 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**", bust: "********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 0, value: 2 }, Card { suit: 1, value: 2 }, Card { suit: 1, value: 9 }, Card { suit: 2, value: 3 }, Card { suit: 2, value: 3 }], total_value: HandValue { soft: 19, hard: 19 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 3 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 6 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 0, value: 9 }, Card { suit: 2, value: 1 }, Card { suit: 3, value: 3 }, Card { suit: 2, value: 6 }], total_value: HandValue { soft: 19, hard: 29 } } }
-GameTied { game_id: 0, user_score: 19, dealer_score: 19 }
-RoundStart { game_id: 0, round_id: 27 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 5 }, Card { suit: 0, value: 11 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 1 }], total_value: HandValue { soft: 1, hard: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 5 }, Card { suit: 0, value: 11 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 12 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 10 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 1 }, Card { suit: 0, value: 4 }, Card { suit: 0, value: 12 }, Card { suit: 2, value: 10 }], total_value: HandValue { soft: 27, hard: 37 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 27 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 16, dealer_score: 27 } }
-RoundStart { game_id: 0, round_id: 28 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 12 }, Card { suit: 1, value: 4 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 6 }], total_value: HandValue { soft: 6, hard: 6 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*****", bust: "*****" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 12 }, Card { suit: 1, value: 4 }], total_value: HandValue { soft: 16, hard: 16 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 2 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 0, value: 2 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 3, value: 1 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 1, value: 3 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 6 }, Card { suit: 2, value: 4 }, Card { suit: 3, value: 2 }, Card { suit: 0, value: 2 }, Card { suit: 3, value: 1 }, Card { suit: 1, value: 3 }], total_value: HandValue { soft: 18, hard: 28 } } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 16, dealer_score: 18 } }
-RoundStart { game_id: 0, round_id: 29 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 6 }, Card { suit: 1, value: 3 }], total_value: HandValue { soft: 9, hard: 9 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 11 }], total_value: HandValue { soft: 11, hard: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "**********", bust: "" } }
-Action { game_id: 0, event: Hits { player: User, card: Card { suit: 3, value: 11 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "*", bust: "*********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 1, value: 6 }, Card { suit: 1, value: 3 }, Card { suit: 3, value: 11 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 11 }, Card { suit: 2, value: 13 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 24 } }
-Info { game_id: 0, event: Wins { player: User, user_score: 20, dealer_score: 24 } }
-RoundStart { game_id: 0, round_id: 30 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 12 }, Card { suit: 0, value: 13 }], total_value: HandValue { soft: 25, hard: 25 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 8 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 12 }, Card { suit: 0, value: 13 }], total_value: HandValue { soft: 25, hard: 25 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 8 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 3, value: 8 }, Card { suit: 3, value: 8 }, Card { suit: 2, value: 8 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 24 } }
-Info { game_id: 0, event: Busts { player: User, score: 25 } }
-GameTied { game_id: 0, user_score: 25, dealer_score: 24 }
-RoundStart { game_id: 0, round_id: 31 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 2, value: 13 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 12 }], total_value: HandValue { soft: 12, hard: 12 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 2, value: 11 }, Card { suit: 2, value: 13 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 1, value: 12 }, Card { suit: 3, value: 8 }], total_value: HandValue { soft: 20, hard: 20 } } }
-Info { game_id: 0, event: Busts { player: User, score: 24 } }
-Info { game_id: 0, event: Wins { player: Dealer, user_score: 24, dealer_score: 20 } }
-RoundStart { game_id: 0, round_id: 32 }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 13 }, Card { suit: 0, value: 11 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 8 }], total_value: HandValue { soft: 8, hard: 8 } } }
-Info { game_id: 0, event: Probabilities { player: User, improvement: "", bust: "**********" } }
-Action { game_id: 0, event: Stands { player: User } }
-Info { game_id: 0, event: Hand { player: User, cards: [Card { suit: 3, value: 13 }, Card { suit: 0, value: 11 }], total_value: HandValue { soft: 24, hard: 24 } } }
-Action { game_id: 0, event: Hits { player: Dealer, card: Card { suit: 2, value: 12 } } }
-Action { game_id: 0, event: Stands { player: Dealer } }
-Info { game_id: 0, event: Hand { player: Dealer, cards: [Card { suit: 2, value: 8 }, Card { suit: 0, value: 7 }, Card { suit: 2, value: 12 }], total_value: HandValue { soft: 27, hard: 27 } } }
-Info { game_id: 0, event: Busts { player: Dealer, score: 27 } }
-Info { game_id: 0, event: Busts { player: User, score: 24 } }
-GameTied { game_id: 0, user_score: 24, dealer_score: 27 }
+User wins:        393,842 (43.16%)
+Dealer wins:      344,935 (37.80%)
+Ties:             173,694 (19.04%)
+Total games:      912,471
+Number of tokens: 563,086,839
+```
+
+```
+GameStart { game_id:  0, num_suits:  4, num_cards_per_suit:  1 3, num_decks:  4, target_score:  2 2, dealer_threshold:  1 8 }
+RoundStart { game_id:  0, round_id:  0 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  4 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  5 }], total_value: HandValue { soft:  5, hard:  5 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  4 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  3 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  5 }, Card { suit:  2, value:  1 }, Card { suit:  2, value:  5 }, Card { suit:  2, value:  3 }, Card { suit:  2, value:  1 2 }], total_value: HandValue { soft:  2 6, hard:  3 6 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 6 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 7, dealer_score:  2 6 } }
+RoundStart { game_id:  0, round_id:  1 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  9 }, Card { suit:  0, value:  1 }], total_value: HandValue { soft:  1 0, hard:  2 0 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * ", bust:  " * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  0, value:  7 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  9 }, Card { suit:  0, value:  1 }, Card { suit:  0, value:  7 }], total_value: HandValue { soft:  1 7, hard:  2 7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }, Card { suit:  0, value:  7 }, Card { suit:  0, value:  6 }, Card { suit:  3, value:  1 2 }], total_value: HandValue { soft:  2 7, hard:  2 7 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 7 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 7, dealer_score:  2 7 } }
+RoundStart { game_id:  0, round_id:  2 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  3, value:  1 1 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  9 }], total_value: HandValue { soft:  9, hard:  9 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  3, value:  1 1 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  9 }, Card { suit:  0, value:  1 0 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 1, dealer_score:  1 9 } }
+RoundStart { game_id:  0, round_id:  3 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  1 0 }, Card { suit:  3, value:  1 3 }], total_value: HandValue { soft:  2 3, hard:  2 3 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " ", bust:  " * * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  1 0 }, Card { suit:  3, value:  1 3 }], total_value: HandValue { soft:  2 3, hard:  2 3 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  4 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  2 }, Card { suit:  3, value:  1 0 }, Card { suit:  1, value:  4 }, Card { suit:  0, value:  2 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Busts { player: User, score:  2 3 } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  2 3, dealer_score:  1 8 } }
+RoundStart { game_id:  0, round_id:  4 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  6 }, Card { suit:  3, value:  6 }], total_value: HandValue { soft:  1 2, hard:  1 2 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  9 }], total_value: HandValue { soft:  9, hard:  9 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * ", bust:  " * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  1 2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " ", bust:  " * * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  6 }, Card { suit:  3, value:  6 }, Card { suit:  3, value:  1 2 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  9 }, Card { suit:  1, value:  7 }, Card { suit:  1, value:  1 2 }], total_value: HandValue { soft:  2 8, hard:  2 8 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 8 } }
+Info { game_id:  0, event: Busts { player: User, score:  2 4 } }
+GameTied { game_id:  0, user_score:  2 4, dealer_score:  2 8 }
+RoundStart { game_id:  0, round_id:  5 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  5 }, Card { suit:  2, value:  1 3 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 3 }], total_value: HandValue { soft:  1 3, hard:  1 3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * ", bust:  " * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  5 }, Card { suit:  2, value:  1 3 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 3 }, Card { suit:  0, value:  1 0 }], total_value: HandValue { soft:  2 3, hard:  2 3 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 3 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 8, dealer_score:  2 3 } }
+RoundStart { game_id:  0, round_id:  6 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  3 }, Card { suit:  3, value:  7 }], total_value: HandValue { soft:  1 0, hard:  1 0 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 2 }], total_value: HandValue { soft:  1 2, hard:  1 2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * ", bust:  " * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  2, value:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * ", bust:  " * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  2, value:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * ", bust:  " * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  3 }, Card { suit:  3, value:  7 }, Card { suit:  2, value:  3 }, Card { suit:  2, value:  3 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  1 0 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 2 }, Card { suit:  2, value:  2 }, Card { suit:  3, value:  1 0 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 4 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 6, dealer_score:  2 4 } }
+RoundStart { game_id:  0, round_id:  7 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  8 }, Card { suit:  3, value:  1 0 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  9 }], total_value: HandValue { soft:  9, hard:  9 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * ", bust:  " * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  8 }, Card { suit:  3, value:  1 0 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  9 }, Card { suit:  1, value:  8 }, Card { suit:  2, value:  1 2 }], total_value: HandValue { soft:  2 9, hard:  2 9 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 9 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 8, dealer_score:  2 9 } }
+RoundStart { game_id:  0, round_id:  8 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  8 }, Card { suit:  0, value:  6 }], total_value: HandValue { soft:  1 4, hard:  1 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 }], total_value: HandValue { soft:  1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  2, value:  5 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  8 }, Card { suit:  0, value:  6 }, Card { suit:  2, value:  5 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  6 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 }, Card { suit:  1, value:  8 }, Card { suit:  1, value:  7 }, Card { suit:  1, value:  6 }], total_value: HandValue { soft:  2 2, hard:  3 2 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 9, dealer_score:  2 2 } }
+RoundStart { game_id:  0, round_id:  9 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 3 }, Card { suit:  3, value:  1 }], total_value: HandValue { soft:  1 4, hard:  2 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  7 }], total_value: HandValue { soft:  7, hard:  7 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * ", bust:  " * * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  4 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 3 }, Card { suit:  3, value:  1 }, Card { suit:  1, value:  1 }, Card { suit:  3, value:  4 }], total_value: HandValue { soft:  1 9, hard:  2 9 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  7 }, Card { suit:  3, value:  1 3 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 9, dealer_score:  2 0 } }
+RoundStart { game_id:  0, round_id:  1 0 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  7 }, Card { suit:  2, value:  7 }], total_value: HandValue { soft:  1 4, hard:  1 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  9 }], total_value: HandValue { soft:  9, hard:  9 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  7 }, Card { suit:  2, value:  7 }, Card { suit:  1, value:  3 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  9 }, Card { suit:  1, value:  1 }, Card { suit:  2, value:  8 }], total_value: HandValue { soft:  1 8, hard:  2 8 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 7, dealer_score:  1 8 } }
+RoundStart { game_id:  0, round_id:  1 1 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  8 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  8 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 3 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  2 }, Card { suit:  2, value:  6 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+GameTied { game_id:  0, user_score:  2 1, dealer_score:  2 1 }
+RoundStart { game_id:  0, round_id:  1 2 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  8 }, Card { suit:  3, value:  4 }], total_value: HandValue { soft:  1 2, hard:  1 2 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  3 }], total_value: HandValue { soft:  3, hard:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * ", bust:  " * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  6 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  8 }, Card { suit:  3, value:  4 }, Card { suit:  1, value:  2 }, Card { suit:  3, value:  6 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  3 }, Card { suit:  3, value:  1 1 }, Card { suit:  3, value:  8 }], total_value: HandValue { soft:  2 2, hard:  2 2 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  2 0, dealer_score:  2 2 } }
+RoundStart { game_id:  0, round_id:  1 3 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  4 }, Card { suit:  1, value:  1 1 }], total_value: HandValue { soft:  1 5, hard:  1 5 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  3 }], total_value: HandValue { soft:  3, hard:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * ", bust:  " * * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  0, value:  1 3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " ", bust:  " * * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  4 }, Card { suit:  1, value:  1 1 }, Card { suit:  0, value:  1 3 }], total_value: HandValue { soft:  2 8, hard:  2 8 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  3 }, Card { suit:  2, value:  1 0 }, Card { suit:  0, value:  1 2 }], total_value: HandValue { soft:  2 5, hard:  2 5 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 5 } }
+Info { game_id:  0, event: Busts { player: User, score:  2 8 } }
+GameTied { game_id:  0, user_score:  2 8, dealer_score:  2 5 }
+RoundStart { game_id:  0, round_id:  1 4 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 1 }, Card { suit:  2, value:  1 3 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 2 }], total_value: HandValue { soft:  1 2, hard:  1 2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " ", bust:  " * * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 1 }, Card { suit:  2, value:  1 3 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 2 }, Card { suit:  0, value:  1 1 }], total_value: HandValue { soft:  2 3, hard:  2 3 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 3 } }
+Info { game_id:  0, event: Busts { player: User, score:  2 4 } }
+GameTied { game_id:  0, user_score:  2 4, dealer_score:  2 3 }
+RoundStart { game_id:  0, round_id:  1 5 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  9 }, Card { suit:  2, value:  1 }], total_value: HandValue { soft:  1 0, hard:  2 0 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  5 }], total_value: HandValue { soft:  5, hard:  5 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * ", bust:  " * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  4 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  7 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  9 }, Card { suit:  2, value:  1 }, Card { suit:  1, value:  4 }, Card { suit:  3, value:  7 }], total_value: HandValue { soft:  2 1, hard:  3 1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  5 }, Card { suit:  2, value:  1 0 }, Card { suit:  2, value:  1 }, Card { suit:  0, value:  1 2 }], total_value: HandValue { soft:  2 8, hard:  3 8 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 8 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 1, dealer_score:  2 8 } }
+RoundStart { game_id:  0, round_id:  1 6 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  7 }, Card { suit:  2, value:  1 0 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 0 }], total_value: HandValue { soft:  1 0, hard:  1 0 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  7 }, Card { suit:  2, value:  1 0 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  3 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 3 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 0 }, Card { suit:  0, value:  4 }, Card { suit:  0, value:  3 }, Card { suit:  2, value:  1 3 }], total_value: HandValue { soft:  3 0, hard:  3 0 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  3 0 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 7, dealer_score:  3 0 } }
+RoundStart { game_id:  0, round_id:  1 7 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 3 }, Card { suit:  1, value:  6 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  5 }], total_value: HandValue { soft:  5, hard:  5 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  1 3 }, Card { suit:  1, value:  6 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  4 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  5 }, Card { suit:  3, value:  7 }, Card { suit:  0, value:  5 }, Card { suit:  3, value:  4 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 9, dealer_score:  2 1 } }
+RoundStart { game_id:  0, round_id:  1 8 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  2 }, Card { suit:  0, value:  5 }], total_value: HandValue { soft:  7, hard:  7 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * * ", bust:  " " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  2, value:  7 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  7 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  2 }, Card { suit:  0, value:  5 }, Card { suit:  2, value:  7 }, Card { suit:  1, value:  7 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  1 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  2 }, Card { suit:  1, value:  5 }, Card { suit:  3, value:  1 1 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 1, dealer_score:  1 8 } }
+RoundStart { game_id:  0, round_id:  1 9 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  1 3 }, Card { suit:  1, value:  4 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  1 }], total_value: HandValue { soft:  1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  1 3 }, Card { suit:  1, value:  4 }], total_value: HandValue { soft:  1 7, hard:  1 7 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  9 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  1 }, Card { suit:  2, value:  3 }, Card { suit:  0, value:  1 }, Card { suit:  2, value:  5 }, Card { suit:  0, value:  9 }], total_value: HandValue { soft:  1 9, hard:  2 9 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 7, dealer_score:  1 9 } }
+RoundStart { game_id:  0, round_id:  2 0 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  2, value:  6 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  3 }], total_value: HandValue { soft:  3, hard:  3 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * ", bust:  " * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  2, value:  6 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 3 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  3 }, Card { suit:  3, value:  9 }, Card { suit:  1, value:  1 3 }], total_value: HandValue { soft:  2 5, hard:  2 5 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 5 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 6, dealer_score:  2 5 } }
+RoundStart { game_id:  0, round_id:  2 1 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  1 3 }, Card { suit:  2, value:  1 1 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  5 }], total_value: HandValue { soft:  5, hard:  5 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " ", bust:  " * * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  1 3 }, Card { suit:  2, value:  1 1 }], total_value: HandValue { soft:  2 4, hard:  2 4 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  5 }, Card { suit:  2, value:  1 }, Card { suit:  3, value:  5 }, Card { suit:  1, value:  1 2 }], total_value: HandValue { soft:  2 3, hard:  3 3 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 3 } }
+Info { game_id:  0, event: Busts { player: User, score:  2 4 } }
+GameTied { game_id:  0, user_score:  2 4, dealer_score:  2 3 }
+RoundStart { game_id:  0, round_id:  2 2 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  9 }, Card { suit:  1, value:  1 1 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  9 }, Card { suit:  1, value:  1 1 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  3 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }, Card { suit:  3, value:  8 }, Card { suit:  1, value:  1 }, Card { suit:  0, value:  6 }, Card { suit:  1, value:  3 }], total_value: HandValue { soft:  2 0, hard:  3 0 } } }
+GameTied { game_id:  0, user_score:  2 0, dealer_score:  2 0 }
+RoundStart { game_id:  0, round_id:  2 3 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  3, value:  1 3 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  6 }], total_value: HandValue { soft:  6, hard:  6 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  3, value:  1 3 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  6 }, Card { suit:  0, value:  5 }, Card { suit:  2, value:  1 1 }], total_value: HandValue { soft:  2 2, hard:  2 2 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 6, dealer_score:  2 2 } }
+RoundStart { game_id:  0, round_id:  2 4 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  8 }, Card { suit:  0, value:  6 }], total_value: HandValue { soft:  1 4, hard:  1 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  4 }], total_value: HandValue { soft:  4, hard:  4 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  6 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  8 }, Card { suit:  0, value:  6 }, Card { suit:  1, value:  6 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  2 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  2 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  1 2 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  4 }, Card { suit:  1, value:  9 }, Card { suit:  0, value:  2 }, Card { suit:  3, value:  2 }, Card { suit:  1, value:  1 2 }], total_value: HandValue { soft:  2 9, hard:  2 9 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 9 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 0, dealer_score:  2 9 } }
+RoundStart { game_id:  0, round_id:  2 5 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  1, value:  1 1 }], total_value: HandValue { soft:  1 4, hard:  1 4 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  1 2 }], total_value: HandValue { soft:  1 2, hard:  1 2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * ", bust:  " * * * * " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  4 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * ", bust:  " * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  1, value:  1 1 }, Card { suit:  3, value:  4 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  2, value:  1 2 }, Card { suit:  2, value:  8 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 8, dealer_score:  2 0 } }
+RoundStart { game_id:  0, round_id:  2 6 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  5 }, Card { suit:  2, value:  2 }], total_value: HandValue { soft:  7, hard:  7 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }], total_value: HandValue { soft:  1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * * ", bust:  " " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  3, value:  8 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * ", bust:  " * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  5 }, Card { suit:  2, value:  2 }, Card { suit:  3, value:  8 }], total_value: HandValue { soft:  1 5, hard:  1 5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }, Card { suit:  1, value:  1 0 }, Card { suit:  0, value:  8 }], total_value: HandValue { soft:  1 9, hard:  2 9 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 5, dealer_score:  1 9 } }
+RoundStart { game_id:  0, round_id:  2 7 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  0, value:  9 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }], total_value: HandValue { soft:  1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * ", bust:  " * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  1 0 }, Card { suit:  0, value:  9 }], total_value: HandValue { soft:  1 9, hard:  1 9 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  4 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  4 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  2 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  1 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }, Card { suit:  2, value:  4 }, Card { suit:  0, value:  4 }, Card { suit:  0, value:  4 }, Card { suit:  1, value:  2 }, Card { suit:  3, value:  1 1 }], total_value: HandValue { soft:  2 6, hard:  3 6 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 6 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 9, dealer_score:  2 6 } }
+RoundStart { game_id:  0, round_id:  2 8 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  1 1 }, Card { suit:  3, value:  7 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * ", bust:  " * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  1 1 }, Card { suit:  3, value:  7 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  3, value:  6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  2 }, Card { suit:  2, value:  4 }, Card { suit:  3, value:  6 }, Card { suit:  0, value:  8 }], total_value: HandValue { soft:  2 0, hard:  2 0 } } }
+Info { game_id:  0, event: Wins { player: Dealer, user_score:  1 8, dealer_score:  2 0 } }
+RoundStart { game_id:  0, round_id:  2 9 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  9 }, Card { suit:  3, value:  1 2 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }], total_value: HandValue { soft:  2, hard:  2 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  9 }, Card { suit:  3, value:  1 2 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  1, value:  5 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  8 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  2 }, Card { suit:  0, value:  1 0 }, Card { suit:  1, value:  5 }, Card { suit:  2, value:  8 }], total_value: HandValue { soft:  2 5, hard:  2 5 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 5 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 1, dealer_score:  2 5 } }
+RoundStart { game_id:  0, round_id:  3 0 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  9 }, Card { suit:  2, value:  9 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }], total_value: HandValue { soft:  1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * ", bust:  " * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  0, value:  9 }, Card { suit:  2, value:  9 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 0 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  3, value:  1 }, Card { suit:  3, value:  1 2 }, Card { suit:  2, value:  1 0 }], total_value: HandValue { soft:  2 3, hard:  3 3 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 3 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 8, dealer_score:  2 3 } }
+RoundStart { game_id:  0, round_id:  3 1 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  2, value:  7 }], total_value: HandValue { soft:  1 0, hard:  1 0 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  6 }], total_value: HandValue { soft:  6, hard:  6 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * * ", bust:  " " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * ", bust:  " * * * * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  3, value:  3 }, Card { suit:  2, value:  7 }, Card { suit:  1, value:  1 1 }], total_value: HandValue { soft:  2 1, hard:  2 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  1, value:  6 }, Card { suit:  2, value:  1 2 }], total_value: HandValue { soft:  1 8, hard:  1 8 } } }
+Info { game_id:  0, event: Wins { player: User, user_score:  2 1, dealer_score:  1 8 } }
+RoundStart { game_id:  0, round_id:  3 2 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  7 }, Card { suit:  3, value:  9 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 1 }], total_value: HandValue { soft:  1 1, hard:  1 1 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  1, value:  7 }, Card { suit:  3, value:  9 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  2, value:  1 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  1 1 }, Card { suit:  0, value:  3 }, Card { suit:  2, value:  1 1 }], total_value: HandValue { soft:  2 5, hard:  2 5 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 5 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 6, dealer_score:  2 5 } }
+RoundStart { game_id:  0, round_id:  3 3 }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  6 }, Card { suit:  2, value:  2 }], total_value: HandValue { soft:  8, hard:  8 } } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  4 }], total_value: HandValue { soft:  4, hard:  4 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * * * * * * * ", bust:  " " } }
+Action { game_id:  0, event: Hits { player: User, card: Card { suit:  1, value:  8 } } }
+Info { game_id:  0, event: Probabilities { player: User, improvement:  " * * * * ", bust:  " * * * * * * " } }
+Action { game_id:  0, event: Stands { player: User } }
+Info { game_id:  0, event: Hand { player: User, cards: [Card { suit:  2, value:  6 }, Card { suit:  2, value:  2 }, Card { suit:  1, value:  8 }], total_value: HandValue { soft:  1 6, hard:  1 6 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  1 } } }
+Action { game_id:  0, event: Hits { player: Dealer, card: Card { suit:  0, value:  1 1 } } }
+Action { game_id:  0, event: Stands { player: Dealer } }
+Info { game_id:  0, event: Hand { player: Dealer, cards: [Card { suit:  0, value:  4 }, Card { suit:  1, value:  1 2 }, Card { suit:  0, value:  1 }, Card { suit:  0, value:  1 1 }], total_value: HandValue { soft:  2 8, hard:  3 8 } } }
+Info { game_id:  0, event: Busts { player: Dealer, score:  2 8 } }
+Info { game_id:  0, event: Wins { player: User, user_score:  1 6, dealer_score:  2 8 } }
 ```
