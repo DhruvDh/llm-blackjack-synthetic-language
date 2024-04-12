@@ -124,6 +124,7 @@ enum ActionEvent {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
 enum Event {
+    BeginSession,
     GameStart {
         game_id:            usize,
         num_suits:          usize,
@@ -133,8 +134,7 @@ enum Event {
         dealer_threshold:   usize,
     },
     RoundStart {
-        game_id:  usize,
-        round_id: usize,
+        game_id: usize,
     },
     Info {
         game_id: usize,
@@ -144,11 +144,18 @@ enum Event {
         game_id: usize,
         event:   ActionEvent,
     },
-    GameTied {
+    RoundTied {
         game_id:      usize,
         user_score:   usize,
         dealer_score: usize,
     },
+    RoundEnd {
+        game_id: usize,
+    },
+    GameEnd {
+        game_id: usize,
+    },
+    EndSession,
 }
 
 #[derive(Debug, Clone)]
@@ -254,7 +261,7 @@ impl<'a> Round<'a> {
                 self.player_hand.push(card);
                 self.deck.card_counter.update(card);
             } else {
-                events.push(Event::GameTied {
+                events.push(Event::RoundTied {
                     game_id:      self.game.game_id,
                     user_score:   0,
                     dealer_score: 0,
@@ -315,7 +322,7 @@ impl<'a> Round<'a> {
 
                 dealer_hand = self.hand_value(&self.dealer_hand);
             } else {
-                events.push(Event::GameTied {
+                events.push(Event::RoundTied {
                     game_id:      self.game.game_id,
                     user_score:   0,
                     dealer_score: 0,
@@ -358,7 +365,7 @@ impl<'a> Round<'a> {
                     score:  user_score,
                 },
             });
-            events.push(Event::GameTied {
+            events.push(Event::RoundTied {
                 game_id: self.game.game_id,
                 user_score,
                 dealer_score,
@@ -414,12 +421,16 @@ impl<'a> Round<'a> {
                 },
             });
         } else {
-            events.push(Event::GameTied {
+            events.push(Event::RoundTied {
                 game_id: self.game.game_id,
                 user_score,
                 dealer_score,
             });
         }
+
+        events.push(Event::RoundEnd {
+            game_id: self.game.game_id,
+        });
 
         events
     }
@@ -536,19 +547,19 @@ impl Game {
             dealer_threshold:   self.dealer_threshold,
         });
 
-        let mut round_id = 0;
         while deck.remaining_cards() > 4 {
             events.push(Event::RoundStart {
                 game_id: self.game_id,
-                round_id,
             });
 
             let mut round = Round::new(*self, &mut deck);
             let round_events = round.play();
             events.extend(round_events);
-
-            round_id += 1;
         }
+
+        events.push(Event::GameEnd {
+            game_id: self.game_id,
+        });
 
         events
     }
@@ -558,41 +569,63 @@ pub fn generate_transcripts(
     num_suits: usize,
     num_cards_per_suit: usize,
     num_decks: usize,
-    num_simultaenous_games: usize,
+    num_simultaneous_games: usize,
 ) -> String {
     let mut all_events = Vec::new();
-    for game_id in 0..num_simultaenous_games {
+    for game_id in 0..num_simultaneous_games {
         let game = Game::new(game_id, num_suits, num_cards_per_suit, num_decks);
         let events = game.generate_data();
         all_events.push(events);
     }
 
-    let mut event_indices = vec![0; num_simultaenous_games];
-    let mut all_done = false;
+    let mut event_indices = vec![0; num_simultaneous_games];
     let mut interleaved_events = Vec::new();
+    interleaved_events.push(format!("{:?}", Event::BeginSession));
 
-    while !all_done {
-        all_done = true;
+    while event_indices
+        .iter()
+        .zip(all_events.iter())
+        .any(|(&index, events)| index < events.len())
+    {
         for (game_index, events) in all_events.iter().enumerate() {
-            if event_indices[game_index] < events.len() {
-                all_done = false;
-                let event = &events[event_indices[game_index]];
-                let mut event_string = format!("{:?}", event);
-
-                // Insert spaces before each digit in the event string
-                event_string = event_string.chars().fold(String::new(), |mut acc, ch| {
-                    if ch.is_ascii_digit() || ch == '*' || ch == '"' {
-                        acc.push(' ');
-                    }
-                    acc.push(ch);
-                    acc
-                });
-
+            if let Some(event) = events.get(event_indices[game_index]) {
+                let event_string = format!("{:?}", event);
                 interleaved_events.push(event_string);
                 event_indices[game_index] += 1;
             }
         }
     }
 
+    interleaved_events.push(format!("{:?}", Event::EndSession));
     interleaved_events.join("\n")
+}
+
+pub fn generate_target_score_table(
+    min_suits: usize,
+    max_suits: usize,
+    min_cards_per_suit: usize,
+    max_cards_per_suit: usize,
+) -> String {
+    let mut table = String::new();
+    table.push_str(
+        "| Suits | Cards per Suit | Target Score | Dealer
+Threshold |\n",
+    );
+    table.push_str(
+        "
+|-------|----------------|--------------|------------------|\n",
+    );
+
+    for num_suits in min_suits..=max_suits {
+        for num_cards_per_suit in min_cards_per_suit..=max_cards_per_suit {
+            let (target_score, dealer_threshold) =
+                calculate_thresholds(num_suits, num_cards_per_suit);
+            table.push_str(&format!(
+                "| {} | {} | {} | {} |\n",
+                num_suits, num_cards_per_suit, target_score, dealer_threshold
+            ));
+        }
+    }
+
+    table
 }

@@ -1,2 +1,6 @@
 /target
 blackjack_transcripts*
+/data
+.vscode
+checkpoints/
+scratch.py
