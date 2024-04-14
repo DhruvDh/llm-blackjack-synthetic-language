@@ -1,16 +1,19 @@
 import torch
-from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 
 from multiprocessing import cpu_count
-from transformers import PreTrainedTokenizerFast
 
+from transformers import PreTrainedTokenizerFast
 from transformers import LlamaConfig, LlamaForCausalLM
 from transformers import DataCollatorForLanguageModeling
+from datasets import load_dataset
+
 from composer.utils import reproducibility
 from composer.metrics.nlp import LanguagePerplexity
 from composer.models import HuggingFaceModel
 from composer import Trainer
+
+from composer.loggers import FileLogger, TensorboardLogger
 
 import os
 
@@ -20,29 +23,21 @@ reproducibility.configure_deterministic_mode()
 reproducibility.seed_all(42)
 
 
-class BlackjackDataset(Dataset):
-    def __init__(self, tokenizer_file, data_file, context_window=8192):
-        self.tokenizer = PreTrainedTokenizerFast.from_pretrained(tokenizer_file)
+def create_sliding_windows(tokenizer, context_window=1024):
+    def create_sliding_windows_inner(examples):
+        input_ids = []
+        labels = []
 
-        with open(data_file, "r") as f:
-            self.data = self.tokenizer.encode(f.read())
-        self.context_window = context_window
+        for text in examples["text"]:
+            encoded_text = tokenizer.encode(text)
 
-    def __len__(self):
-        return len(self.data)
+            for i in range(len(encoded_text) - context_window):
+                input_ids.append(encoded_text[i : i + context_window])
+                labels.append(encoded_text[i + context_window])
 
-    def __getitem__(self, idx):
-        if idx >= self.__len__():
-            raise IndexError
+        return {"input_ids": input_ids, "labels": labels}
 
-        start_at_idx = (idx - self.context_window) if idx > self.context_window else 0
-
-        inputs = self.data[
-            start_at_idx : idx + 1
-        ]  # Include the target token in the input sequence
-        inputs = torch.tensor(inputs)
-
-        return inputs
+    return create_sliding_windows_inner
 
 
 if __name__ == "__main__":
@@ -53,46 +48,71 @@ if __name__ == "__main__":
     os.environ["LOCAL_WORLD_SIZE"] = "1"
     os.environ["MASTER_ADDR"] = "127.0.0.1"
     os.environ["MASTER_PORT"] = "29500"
-
-    torch.distributed.init_process_group()
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+    datafolder = "data-generated"
     context_window = 1024
-    train_dataset = BlackjackDataset(
-        "data/blackjack_transcripts-tokenizer.json",
-        "data/blackjack_transcripts.txt",
-        context_window=context_window,
+
+    tokenizer_file = f"{datafolder}/overall-tokenizer.json"
+    tokenizer = PreTrainedTokenizerFast.from_pretrained(tokenizer_file)
+
+    dataset = load_dataset(
+        "text",
+        data_files={
+            "train": [f"{datafolder}/train/*.txt"],
+            "eval": [f"{datafolder}/eval/*.txt"],
+        },
+        sample_by="document",
+        keep_linebreaks=True,
     )
 
-    data_collator = DataCollatorForLanguageModeling(
-        tokenizer=train_dataset.tokenizer, mlm=False
+    tokenized_dataset = dataset.map(
+        create_sliding_windows(
+            tokenizer=tokenizer,
+            context_window=context_window,
+        ),
+        batched=True,
+        num_proc=cpu_count(),
+        remove_columns=["text"],
     )
+
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     train_dataloader = DataLoader(
-        train_dataset,
+        tokenized_dataset["train"],
         shuffle=True,
         batch_size=96,
         pin_memory=True,
         collate_fn=data_collator,
-        persistent_workers=True,
+        prefetch_factor=8,
+        num_workers=cpu_count(),
+    )
+
+    eval_dataloader = DataLoader(
+        tokenized_dataset["eval"],
+        shuffle=False,
+        batch_size=96,
+        pin_memory=True,
+        collate_fn=data_collator,
+        prefetch_factor=8,
         num_workers=cpu_count(),
     )
 
     config = LlamaConfig(
-        vocab_size=train_dataset.tokenizer.vocab_size,
+        vocab_size=tokenizer.vocab_size,
         num_attention_heads=8,
         num_key_value_heads=8,
         num_hidden_layers=6,
         hidden_size=128,
-        intermediate_size=256,
+        intermediate_size=128,
         max_position_embeddings=context_window,
         tie_word_embeddings=True,
     )
 
     model = HuggingFaceModel(
         LlamaForCausalLM(config),
-        tokenizer=train_dataset.tokenizer,
+        tokenizer=tokenizer,
         metrics=[LanguagePerplexity(ignore_index=-100)],
         use_logits=True,
     )
@@ -102,20 +122,24 @@ if __name__ == "__main__":
     optimizer = schedulefree.AdamWScheduleFree(model.parameters(), lr=3e-4)
     print(model)
 
+    torch.distributed.init_process_group()
+
     trainer = Trainer(
         model=model,
         optimizers=optimizer,
         train_dataloader=train_dataloader,
+        eval_dataloader=eval_dataloader,
         max_duration="1ep",
         save_folder="checkpoints",
-        save_filename="ep{epoch}.pt",
+        save_filename="test-run-3ep{epoch}.pt",
         save_interval="1500ba",
         save_overwrite=False,
         device_train_microbatch_size="auto",
         device="gpu",
-        run_name="test-train",
+        run_name="test-run-3",
         autoresume=True,
         precision="amp_bf16",
+        loggers=[FileLogger("data/logs.txt"), TensorboardLogger()],
     )
 
     trainer.fit()

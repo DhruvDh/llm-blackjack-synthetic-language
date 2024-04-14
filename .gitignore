@@ -1,6 +1,7 @@
 /target
 blackjack_transcripts*
-/data
+data*
 .vscode
-checkpoints/
+checkpoints*
 scratch.py
+tensorboard_logs
