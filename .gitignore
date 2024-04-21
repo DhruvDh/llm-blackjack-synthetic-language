@@ -5,3 +5,5 @@ data*
 checkpoints*
 scratch.py
 tensorboard_logs
+.envrc
+.neptune

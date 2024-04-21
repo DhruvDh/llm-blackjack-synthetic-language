@@ -11,9 +11,12 @@ indicatif = "0.17.8"
 num-format = "0.4.4"
 rand = "0.8.5"
 rand_chacha = { version = "0.3.1", features = ["std", "serde", "simd"] }
-serde = "1.0.197"
+ron = "0.8.1"
+serde = { version = "1.0.197", features = ["derive"] }
 serde_derive = "1.0.197"
-serde_json = "1.0.115"
+serde_json = "1.0.116"
 thiserror = "1.0.58"
-tokenizers = "0.15.2"
+tokenizers = "0.19.1"
 tokio = { version = "1.37.0", features = ["full"] }
+tokio-stream = { version = "0.1.15", features = ["fs"] }
+uuid = { version = "1.8.0", features = ["v4"] }

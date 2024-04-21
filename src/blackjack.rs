@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use rand::{
     seq::SliceRandom,
+    Rng,
     SeedableRng,
 };
 use rand_chacha::ChaCha12Rng;
@@ -13,14 +14,14 @@ use thiserror::Error;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
-struct Card {
+pub(crate) struct Card {
     suit:  usize,
     value: usize,
 }
 
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
-struct Deck {
+pub(crate) struct Deck {
     cards:              Vec<Card>,
     num_suits:          usize,
     num_cards_per_suit: usize,
@@ -29,7 +30,7 @@ struct Deck {
 }
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
-struct HandValue {
+pub(crate) struct HandValue {
     soft: usize,
     hard: usize,
 }
@@ -86,13 +87,13 @@ impl Deck {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
-enum Player {
+pub(crate) enum Player {
     User,
     Dealer,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
-enum InfoEvent {
+pub(crate) enum InfoEvent {
     Hand {
         player:      Player,
         cards:       Vec<Card>,
@@ -116,14 +117,14 @@ enum InfoEvent {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
-enum ActionEvent {
+pub(crate) enum ActionEvent {
     Hits { player: Player, card: Card },
     Stands { player: Player },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
-enum Event {
+pub(crate) enum Event {
     BeginSession,
     GameStart {
         game_id:            usize,
@@ -158,8 +159,41 @@ enum Event {
     EndSession,
 }
 
+pub(crate) trait GameID {
+    fn game_id(&self) -> Option<usize>;
+}
+
+impl GameID for Event {
+    fn game_id(&self) -> Option<usize> {
+        match self {
+            Event::GameStart {
+                game_id, ..
+            } => Some(*game_id),
+            Event::RoundStart {
+                game_id,
+            } => Some(*game_id),
+            Event::Info {
+                game_id, ..
+            } => Some(*game_id),
+            Event::Action {
+                game_id, ..
+            } => Some(*game_id),
+            Event::RoundTied {
+                game_id, ..
+            } => Some(*game_id),
+            Event::RoundEnd {
+                game_id,
+            } => Some(*game_id),
+            Event::GameEnd {
+                game_id,
+            } => Some(*game_id),
+            _ => None,
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
-struct CardCounter {
+pub(crate) struct CardCounter {
     counts: HashMap<usize, usize>,
 }
 
@@ -197,7 +231,7 @@ fn probability_to_stars(probability: f64) -> String {
     "*".repeat(num_stars)
 }
 
-struct Round<'a> {
+pub(crate) struct Round<'a> {
     game:        Game,
     player_hand: Vec<Card>,
     dealer_hand: Vec<Card>,
@@ -495,7 +529,7 @@ impl<'a> Round<'a> {
 }
 
 #[derive(Debug, Clone, Copy)]
-struct Game {
+pub(crate) struct Game {
     game_id:            usize,
     num_suits:          usize,
     num_cards_per_suit: usize,
@@ -522,7 +556,14 @@ fn calculate_thresholds(num_suits: usize, num_cards_per_suit: usize) -> (usize, 
 
 impl Game {
     fn new(game_id: usize, num_suits: usize, num_cards_per_suit: usize, num_decks: usize) -> Self {
-        let (target_score, dealer_threshold) = calculate_thresholds(num_suits, num_cards_per_suit);
+        let (mut target_score, mut dealer_threshold) =
+            calculate_thresholds(num_suits, num_cards_per_suit);
+
+        let mut rng = rand::thread_rng();
+        let adjustment = rng.gen_range(-1..=1);
+        target_score = (target_score as i32 + adjustment).max(1) as usize;
+        dealer_threshold = (dealer_threshold as i32 + adjustment).max(1) as usize;
+
         Self {
             game_id,
             num_suits,
@@ -565,14 +606,17 @@ impl Game {
     }
 }
 
-pub fn generate_transcripts(
+pub(crate) fn generate_transcripts(
     num_suits: usize,
     num_cards_per_suit: usize,
     num_decks: usize,
     num_simultaneous_games: usize,
 ) -> String {
     let mut all_events = Vec::new();
-    for game_id in 0..num_simultaneous_games {
+    let mut game_ids: Vec<usize> = (1..=15).collect();
+    game_ids.shuffle(&mut rand::thread_rng());
+
+    for &game_id in game_ids.iter().take(num_simultaneous_games) {
         let game = Game::new(game_id, num_suits, num_cards_per_suit, num_decks);
         let events = game.generate_data();
         all_events.push(events);
@@ -589,7 +633,7 @@ pub fn generate_transcripts(
     {
         for (game_index, events) in all_events.iter().enumerate() {
             if let Some(event) = events.get(event_indices[game_index]) {
-                let event_string = format!("{:?}", event);
+                let event_string = ron::to_string(event).expect("Could not serialize event.");
                 interleaved_events.push(event_string);
                 event_indices[game_index] += 1;
             }
@@ -600,7 +644,7 @@ pub fn generate_transcripts(
     interleaved_events.join("\n")
 }
 
-pub fn generate_target_score_table(
+pub(crate) fn generate_target_score_table(
     min_suits: usize,
     max_suits: usize,
     min_cards_per_suit: usize,

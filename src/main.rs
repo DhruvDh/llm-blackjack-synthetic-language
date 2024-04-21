@@ -1,13 +1,27 @@
+use std::collections::HashMap;
+
+use anyhow::Context;
+use blackjack::{
+    Event,
+    GameID,
+    InfoEvent,
+};
 use bpaf::Bpaf;
 use futures::{
     stream::FuturesUnordered,
     StreamExt,
 };
 use num_format::ToFormattedString;
+use rand::seq::SliceRandom;
+use serde::{
+    Deserialize,
+    Serialize,
+};
 use tokio::{
     fs::OpenOptions,
     io::AsyncWriteExt,
 };
+use tokio_stream::wrappers::ReadDirStream;
 
 mod blackjack;
 mod tokenizer;
@@ -38,8 +52,8 @@ struct Config {
     /// Maximum number of cards per suit (default: 15)
     #[bpaf(long, fallback(15))]
     max_cards_per_suit:         usize,
-    /// Number of games to generate for each configuration (default: 15)
-    #[bpaf(short, long, fallback(15))]
+    /// Number of games to generate for each configuration (default: 33)
+    #[bpaf(short, long, fallback(33))]
     num_games:                  usize,
     /// Maximum number of simultaneous games to generate (default: 2)
     #[bpaf(short, long, fallback(2))]
@@ -48,7 +62,7 @@ struct Config {
     #[bpaf(long, fallback(6))]
     num_eval_games:             usize,
     /// Output directory for the generated data. (default: data)
-    #[bpaf(long, fallback("data-generated".to_string()))]
+    #[bpaf(long, fallback("data-generated-icl".to_string()))]
     output_dir:                 String,
 }
 
@@ -57,16 +71,18 @@ async fn process_transcripts(
     output_dir: &str,
     num_games: usize,
 ) -> anyhow::Result<Vec<String>> {
-    tokio::fs::create_dir_all(output_dir).await?;
+    tokio::fs::create_dir_all(output_dir)
+        .await
+        .context("Failed to create output directory")?;
 
     let mut tasks = FuturesUnordered::new();
     let mut game_id = 0;
 
-    for num_decks in config.min_decks..=config.max_decks {
-        for num_suits in config.min_suits..=config.max_suits {
-            for num_cards_per_suit in config.min_cards_per_suit..=config.max_cards_per_suit {
-                for num_simultaneous_games in 1..=config.max_num_simultaneous_games {
-                    for _ in 0..num_games {
+    for _ in 0..num_games {
+        for num_decks in config.min_decks..=config.max_decks {
+            for num_suits in config.min_suits..=config.max_suits {
+                for num_cards_per_suit in config.min_cards_per_suit..=config.max_cards_per_suit {
+                    for num_simultaneous_games in 1..=config.max_num_simultaneous_games {
                         let output_dir = output_dir.to_string();
                         let task = tokio::spawn(async move {
                             let transcript = generate_transcripts(
@@ -106,15 +122,19 @@ async fn process_transcripts(
 async fn analyze_transcripts(file_paths: &[String], label: &str) -> anyhow::Result<()> {
     let mut contents = String::new();
     for file_path in file_paths {
-        contents.push_str(&tokio::fs::read_to_string(file_path).await?);
+        contents.push_str(
+            &tokio::fs::read_to_string(file_path)
+                .await
+                .with_context(|| format!("Failed to read file: {}", file_path))?,
+        );
         contents.push('\n');
     }
 
-    let user_wins = contents.matches("Wins { player: User").count();
-    let dealer_wins = contents.matches("Wins { player: Dealer").count();
-    let ties = contents.matches("RoundTied {").count();
-    let total_rounds = user_wins + dealer_wins + ties;
-    let total_games = contents.matches("GameEnd {").count();
+    let user_wins = contents.matches("event:Wins(player:User").count();
+    let dealer_wins = contents.matches("event:Wins(player:Dealer").count();
+    let ties = contents.matches("RoundTied(game_id:").count();
+    let total_rounds = contents.matches("RoundEnd(game_id:").count();
+    let total_games = contents.matches("GameEnd(game_id:").count();
     let total_sessions = contents.matches("EndSession").count();
 
     println!("Results for {}:", label);
@@ -153,7 +173,11 @@ async fn analyze_transcripts(file_paths: &[String], label: &str) -> anyhow::Resu
 async fn tokenize_and_decode(file_paths: &[String], output_prefix: &str) -> anyhow::Result<()> {
     let mut contents = String::new();
     for file_path in file_paths {
-        contents.push_str(&tokio::fs::read_to_string(file_path).await?);
+        contents.push_str(
+            &tokio::fs::read_to_string(file_path)
+                .await
+                .with_context(|| format!("Failed to read file: {}", file_path))?,
+        );
         contents.push('\n');
     }
 
@@ -239,6 +263,197 @@ async fn tokenize_and_decode(file_paths: &[String], output_prefix: &str) -> anyh
     Ok(())
 }
 
+async fn shuffle_files(directory: &str) -> anyhow::Result<()> {
+    let temp_dir = format!("{}_temp", directory);
+    tokio::fs::create_dir_all(&temp_dir).await?;
+
+    let mut files = tokio::fs::read_dir(directory).await?;
+    let mut file_names = Vec::new();
+
+    while let Some(entry) = files.next_entry().await? {
+        let file_name = entry.file_name().to_string_lossy().into_owned();
+        let old_path = format!("{}/{}", directory, file_name);
+        let new_path = format!("{}/{}", temp_dir, file_name);
+        tokio::fs::rename(&old_path, &new_path).await?;
+        file_names.push(file_name);
+    }
+
+    let mut rng = rand::thread_rng();
+    file_names.shuffle(&mut rng);
+
+    for (i, file_name) in file_names.iter().enumerate() {
+        let old_path = format!("{}/{}", temp_dir, file_name);
+        let new_path = format!("{}/session_{}.txt", directory, i);
+        tokio::fs::rename(&old_path, &new_path).await?;
+    }
+
+    tokio::fs::remove_dir_all(&temp_dir).await?;
+
+    Ok(())
+}
+
+fn generate_all_configs(config: &Config) -> Vec<(usize, usize, usize)> {
+    let mut configs = Vec::new();
+
+    for num_decks in config.min_decks..=config.max_decks {
+        for num_suits in config.min_suits..=config.max_suits {
+            for num_cards_per_suit in config.min_cards_per_suit..=config.max_cards_per_suit {
+                configs.push((num_suits, num_cards_per_suit, num_decks));
+            }
+        }
+    }
+
+    configs
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+struct JsonlEntry {
+    context:      String,
+    continuation: String,
+}
+
+async fn generate_icl_eval_data(eval_dir: &str) -> anyhow::Result<()> {
+    let mut eval_files_stream = ReadDirStream::new(tokio::fs::read_dir(eval_dir).await?);
+    let mut tasks = FuturesUnordered::new();
+
+    while let Some(entry) = eval_files_stream.next().await {
+        let path = entry?.path();
+        let task = tokio::spawn(async move {
+            let file_contents = tokio::fs::read_to_string(path).await?;
+            let events: Vec<Event> = file_contents
+                .lines()
+                .map(|line| ron::from_str(line).unwrap())
+                .collect();
+
+            let mut jsonl_entries: HashMap<String, Vec<JsonlEntry>> = HashMap::new();
+            let mut game_id_to_config: HashMap<usize, (usize, usize, usize)> = HashMap::new();
+            let mut session_context = String::new();
+
+            for event in events {
+                let event_string = ron::to_string(&event).unwrap();
+
+                match event {
+                    Event::BeginSession => {
+                        session_context.push_str(&event_string);
+                        session_context.push('\n');
+                    }
+                    Event::EndSession => {
+                        session_context.clear();
+                    }
+                    Event::GameStart {
+                        game_id,
+                        num_suits,
+                        num_cards_per_suit,
+                        num_decks,
+                        ..
+                    } => {
+                        let config = (num_suits, num_cards_per_suit, num_decks);
+                        game_id_to_config.insert(game_id, config);
+                    }
+                    Event::Info {
+                        game_id,
+                        event:
+                            InfoEvent::Probabilities {
+                                ..
+                            },
+                    } => {
+                        if let Some(config) = game_id_to_config.get(&game_id) {
+                            let (num_suits, num_cards_per_suit, num_decks) = *config;
+                            let config_key = format!(
+                                "eval_suits_{}_cards_{}_decks_{}",
+                                num_suits, num_cards_per_suit, num_decks
+                            );
+                            let (context_part, continuation_part) =
+                                event_string.split_once("improvement:").unwrap();
+                            let continuation = extract_stars(continuation_part);
+                            let jsonl_entry = JsonlEntry {
+                                context: format!("{}{}", session_context, context_part),
+                                continuation,
+                            };
+                            jsonl_entries
+                                .entry(config_key)
+                                .or_default()
+                                .push(jsonl_entry);
+                        }
+                    }
+                    _ => {
+                        session_context.push_str(&event_string);
+                        session_context.push('\n');
+                    }
+                }
+            }
+
+            Ok::<_, anyhow::Error>(jsonl_entries)
+        });
+        tasks.push(task);
+    }
+
+    let mut all_jsonl_entries: HashMap<String, Vec<JsonlEntry>> = HashMap::new();
+
+    while let Some(result) = tasks.next().await {
+        let jsonl_entries = result??;
+        for (config_key, entries) in jsonl_entries {
+            all_jsonl_entries
+                .entry(config_key)
+                .or_default()
+                .extend(entries);
+        }
+    }
+
+    tokio::fs::create_dir_all("data-generated-icl/eval-icl").await?;
+
+    let jsonl_tasks: Vec<_> = all_jsonl_entries
+        .into_iter()
+        .map(|(config_key, entries)| {
+            tokio::spawn(async move {
+                let jsonl_file_path = format!("data-generated-icl/eval-icl/{}.jsonl", config_key);
+                let jsonl_file = OpenOptions::new()
+                    .create(true)
+                    .write(true)
+                    .truncate(true)
+                    .open(jsonl_file_path.clone())
+                    .await?;
+                let mut writer = tokio::io::BufWriter::new(jsonl_file);
+
+                for entry in entries.clone() {
+                    let json_string = serde_json::to_string(&entry).unwrap();
+                    writer.write_all(json_string.as_bytes()).await?;
+                    writer.write_all(b"\n").await?;
+                }
+
+                let parts: Vec<&str> = config_key.split('_').collect();
+                let num_suits = parts[2].parse::<usize>().unwrap();
+                let num_cards_per_suit = parts[4].parse::<usize>().unwrap();
+                let num_decks = parts[6].parse::<usize>().unwrap();
+
+                println!(
+                    "Generated {} JSONL entries for configuration: ({}, {}, {})",
+                    entries.len(),
+                    num_suits,
+                    num_cards_per_suit,
+                    num_decks
+                );
+
+                Ok::<_, anyhow::Error>(())
+            })
+        })
+        .collect();
+
+    for task in jsonl_tasks {
+        task.await??;
+    }
+
+    Ok(())
+}
+
+fn extract_stars(continuation_part: &str) -> String {
+    let mut continuation = continuation_part.trim().to_string();
+    if let Some(bust_index) = continuation.find("bust:") {
+        continuation.truncate(bust_index);
+    }
+    continuation.trim().to_string()
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let config = config().run();
@@ -266,5 +481,11 @@ async fn main() -> anyhow::Result<()> {
 
     tokenize_and_decode(&all_file_paths, &format!("{}/overall", config.output_dir)).await?;
 
+    println!("Generating eval ICL data...");
+    generate_icl_eval_data(&eval_dir).await?;
+
+    println!("Shuffling files...");
+    shuffle_files(&train_dir).await?;
+    shuffle_files(&eval_dir).await?;
     Ok(())
 }

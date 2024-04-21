@@ -7,17 +7,20 @@ from transformers import PreTrainedTokenizerFast
 from transformers import LlamaConfig, LlamaForCausalLM
 from transformers import DataCollatorForLanguageModeling
 from datasets import load_dataset
+import datasets
 
 from composer.utils import reproducibility
 from composer.metrics.nlp import LanguagePerplexity
 from composer.models import HuggingFaceModel
 from composer import Trainer
+from composer.core import Evaluator
 
-from composer.loggers import FileLogger, TensorboardLogger
+from composer.loggers import FileLogger, TensorboardLogger, NeptuneLogger
 
 import os
 
 import schedulefree
+from torchinfo import summary
 
 reproducibility.configure_deterministic_mode()
 reproducibility.seed_all(42)
@@ -50,9 +53,12 @@ if __name__ == "__main__":
     os.environ["MASTER_PORT"] = "29500"
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+    datasets.config.IN_MEMORY_MAX_SIZE = 8e9
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     datafolder = "data-generated"
-    context_window = 1024
+    context_window = 4096
+    batch_size = 16
+    run_name = "test-run-7"
 
     tokenizer_file = f"{datafolder}/overall-tokenizer.json"
     tokenizer = PreTrainedTokenizerFast.from_pretrained(tokenizer_file)
@@ -65,49 +71,66 @@ if __name__ == "__main__":
         },
         sample_by="document",
         keep_linebreaks=True,
+        cache_dir=f"{datafolder}/.cache",
     )
 
-    tokenized_dataset = dataset.map(
+    dataset = dataset.map(
         create_sliding_windows(
             tokenizer=tokenizer,
             context_window=context_window,
         ),
         batched=True,
-        num_proc=cpu_count(),
+        batch_size=1,
+        num_proc=1,
         remove_columns=["text"],
     )
+
+    train_dataset = dataset["train"]
+    eval_dataset = dataset["eval"]
 
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     train_dataloader = DataLoader(
-        tokenized_dataset["train"],
+        train_dataset,
         shuffle=True,
-        batch_size=96,
+        batch_size=batch_size,
         pin_memory=True,
         collate_fn=data_collator,
-        prefetch_factor=8,
+        prefetch_factor=int(batch_size / 8),
         num_workers=cpu_count(),
     )
 
     eval_dataloader = DataLoader(
-        tokenized_dataset["eval"],
+        eval_dataset,
         shuffle=False,
-        batch_size=96,
+        batch_size=batch_size,
         pin_memory=True,
         collate_fn=data_collator,
-        prefetch_factor=8,
+        prefetch_factor=int(batch_size / 8),
         num_workers=cpu_count(),
+    )
+
+    ppl_eval = Evaluator(
+        label="labels",
+        dataloader=eval_dataloader,
+        metric_names=["LanguagePerplexity"],
     )
 
     config = LlamaConfig(
         vocab_size=tokenizer.vocab_size,
-        num_attention_heads=8,
-        num_key_value_heads=8,
+        num_attention_heads=1,
+        num_key_value_heads=1,
         num_hidden_layers=6,
-        hidden_size=128,
-        intermediate_size=128,
-        max_position_embeddings=context_window,
+        hidden_size=256,
+        intermediate_size=256,
         tie_word_embeddings=True,
+        rms_norm_eps=1e-5,
+        rope_theta=500000,
+        pad_token_id=tokenizer.pad_token_id,
+        bos_token_id=tokenizer.get_vocab()["BeginSession"],
+        eos_token_id=tokenizer.get_vocab()["EndSession"],
+        max_position_embeddings=context_window,
+        use_cache=True,
     )
 
     model = HuggingFaceModel(
@@ -119,8 +142,8 @@ if __name__ == "__main__":
     model.to(device)
     model.train()
 
-    optimizer = schedulefree.AdamWScheduleFree(model.parameters(), lr=3e-4)
-    print(model)
+    optimizer = schedulefree.AdamWScheduleFree(model.parameters(), lr=2e-4)
+    summary(model)
 
     torch.distributed.init_process_group()
 
@@ -128,18 +151,32 @@ if __name__ == "__main__":
         model=model,
         optimizers=optimizer,
         train_dataloader=train_dataloader,
-        eval_dataloader=eval_dataloader,
+        eval_dataloader=[ppl_eval],
+        eval_interval="1500ba",
         max_duration="1ep",
-        save_folder="checkpoints",
-        save_filename="test-run-3ep{epoch}.pt",
+        save_folder=f"checkpoints/{run_name}",
+        save_filename=run_name + "ep{epoch}.pt",
         save_interval="1500ba",
         save_overwrite=False,
         device_train_microbatch_size="auto",
         device="gpu",
-        run_name="test-run-3",
+        run_name=run_name,
         autoresume=True,
-        precision="amp_bf16",
-        loggers=[FileLogger("data/logs.txt"), TensorboardLogger()],
+        precision="amp_fp16",
+        loggers=[
+            FileLogger("checkpoints/logs.txt"),
+            TensorboardLogger(),
+            # NeptuneLogger(
+            #     project="blackjack-synthetic",
+            #     name=run_name,
+            #     description="Test run #6",
+            #     source_files="*.py",
+            #     upload_artifacts=True,
+            #     git_ref=True,
+            #     dependencies="infer",
+            #     mode="offline",
+            # ),
+        ],
     )
 
     trainer.fit()
