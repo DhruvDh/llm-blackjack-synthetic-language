@@ -159,39 +159,6 @@ pub(crate) enum Event {
     EndSession,
 }
 
-pub(crate) trait GameID {
-    fn game_id(&self) -> Option<usize>;
-}
-
-impl GameID for Event {
-    fn game_id(&self) -> Option<usize> {
-        match self {
-            Event::GameStart {
-                game_id, ..
-            } => Some(*game_id),
-            Event::RoundStart {
-                game_id,
-            } => Some(*game_id),
-            Event::Info {
-                game_id, ..
-            } => Some(*game_id),
-            Event::Action {
-                game_id, ..
-            } => Some(*game_id),
-            Event::RoundTied {
-                game_id, ..
-            } => Some(*game_id),
-            Event::RoundEnd {
-                game_id,
-            } => Some(*game_id),
-            Event::GameEnd {
-                game_id,
-            } => Some(*game_id),
-            _ => None,
-        }
-    }
-}
-
 #[derive(Debug, Clone)]
 pub(crate) struct CardCounter {
     counts: HashMap<usize, usize>,

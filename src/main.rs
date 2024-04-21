@@ -59,7 +59,7 @@ struct Config {
     #[bpaf(short, long, fallback(2))]
     max_num_simultaneous_games: usize,
     /// Number of games to generate for the eval set. (default: 6)
-    #[bpaf(long, fallback(6))]
+    #[bpaf(long, fallback(10))]
     num_eval_games:             usize,
     /// Output directory for the generated data. (default: data)
     #[bpaf(long, fallback("data-generated-icl".to_string()))]
@@ -292,20 +292,6 @@ async fn shuffle_files(directory: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn generate_all_configs(config: &Config) -> Vec<(usize, usize, usize)> {
-    let mut configs = Vec::new();
-
-    for num_decks in config.min_decks..=config.max_decks {
-        for num_suits in config.min_suits..=config.max_suits {
-            for num_cards_per_suit in config.min_cards_per_suit..=config.max_cards_per_suit {
-                configs.push((num_suits, num_cards_per_suit, num_decks));
-            }
-        }
-    }
-
-    configs
-}
-
 #[derive(Debug, Deserialize, Serialize, Clone)]
 struct JsonlEntry {
     context:      String,
@@ -349,6 +335,8 @@ async fn generate_icl_eval_data(eval_dir: &str) -> anyhow::Result<()> {
                     } => {
                         let config = (num_suits, num_cards_per_suit, num_decks);
                         game_id_to_config.insert(game_id, config);
+                        session_context.push_str(&event_string);
+                        session_context.push('\n');
                     }
                     Event::Info {
                         game_id,
@@ -363,11 +351,12 @@ async fn generate_icl_eval_data(eval_dir: &str) -> anyhow::Result<()> {
                                 "eval_suits_{}_cards_{}_decks_{}",
                                 num_suits, num_cards_per_suit, num_decks
                             );
+                            let separator = "improvement:";
                             let (context_part, continuation_part) =
-                                event_string.split_once("improvement:").unwrap();
+                                event_string.split_once(separator).unwrap();
                             let continuation = extract_stars(continuation_part);
                             let jsonl_entry = JsonlEntry {
-                                context: format!("{}{}", session_context, context_part),
+                                context: session_context.clone() + context_part + separator,
                                 continuation,
                             };
                             jsonl_entries
@@ -375,6 +364,8 @@ async fn generate_icl_eval_data(eval_dir: &str) -> anyhow::Result<()> {
                                 .or_default()
                                 .push(jsonl_entry);
                         }
+                        session_context.push_str(&event_string);
+                        session_context.push('\n');
                     }
                     _ => {
                         session_context.push_str(&event_string);
