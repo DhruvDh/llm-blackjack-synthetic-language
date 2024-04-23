@@ -14,6 +14,7 @@ from composer.metrics.nlp import LanguagePerplexity, InContextLearningQAAccuracy
 from composer.models import HuggingFaceModel
 from composer import Trainer
 from composer.core import Evaluator
+from composer.models import write_huggingface_pretrained_from_composer_checkpoint
 
 from composer.loggers import FileLogger, TensorboardLogger, NeptuneLogger
 from composer import Callback, Event, Logger, State
@@ -42,6 +43,25 @@ def create_sliding_windows(tokenizer, context_window=1024):
         return {"input_ids": input_ids, "labels": labels}
 
     return create_sliding_windows_inner
+
+
+class CheckpointConverter(Callback):
+    def __init__(self, run_name):
+        self.run_name = run_name
+
+    def run_event(self, event: Event, state: State, logger: Logger):
+        if (
+            event == Event.BATCH_CHECKPOINT
+            or event == Event.EPOCH_CHECKPOINT
+            or event == Event.ITERATION_CHECKPOINT
+        ):
+            latest_checkpoint = state.get_checkpoint_filename()
+            new_foldername = latest_checkpoint.replace(".pt", "-hf")
+            if latest_checkpoint is not None:
+                write_huggingface_pretrained_from_composer_checkpoint(
+                    latest_checkpoint,
+                    f"checkpoints/{self.run_name}/{new_foldername}",
+                )
 
 
 if __name__ == "__main__":
@@ -107,7 +127,7 @@ if __name__ == "__main__":
     eval_dataloader = DataLoader(
         dataset["eval"],
         shuffle=False,
-        batch_size=batch_size,
+        batch_size=batch_size * 2,
         pin_memory=False,
         collate_fn=data_collator,
         prefetch_factor=int(batch_size / 8),
@@ -167,6 +187,7 @@ if __name__ == "__main__":
         autoresume=True,
         precision="amp_fp16",
         console_log_interval=eval_interval,
+        callbacks=[CheckpointConverter(run_name)],
         loggers=[
             FileLogger(f"checkpoints/{run_name}_logs.txt"),
             TensorboardLogger(),
@@ -178,7 +199,7 @@ if __name__ == "__main__":
             #     upload_artifacts=True,
             #     git_ref=True,
             #     dependencies="infer",
-            #     mode="sync",
+            #     mode="offline",
             # ),
         ],
     )
