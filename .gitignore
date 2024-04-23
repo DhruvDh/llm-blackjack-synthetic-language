@@ -7,3 +7,4 @@ scratch.py
 tensorboard_logs
 .envrc
 .neptune
+tokenizer-save-dir*

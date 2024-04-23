@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use anyhow::Context;
 use blackjack::{
     Event,
-    GameID,
     InfoEvent,
 };
 use bpaf::Bpaf;

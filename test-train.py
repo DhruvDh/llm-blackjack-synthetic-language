@@ -10,12 +10,13 @@ from datasets import load_dataset
 import datasets
 
 from composer.utils import reproducibility
-from composer.metrics.nlp import LanguagePerplexity
+from composer.metrics.nlp import LanguagePerplexity, InContextLearningQAAccuracy
 from composer.models import HuggingFaceModel
 from composer import Trainer
 from composer.core import Evaluator
 
 from composer.loggers import FileLogger, TensorboardLogger, NeptuneLogger
+from composer import Callback, Event, Logger, State
 
 import os
 
@@ -55,13 +56,23 @@ if __name__ == "__main__":
 
     datasets.config.IN_MEMORY_MAX_SIZE = 8e9
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    datafolder = "data-generated"
+    datafolder = "data-generated-icl"
     context_window = 4096
-    batch_size = 16
-    run_name = "test-run-7"
+    batch_size = 8
+    run_name = "icl-run-9"
+    eval_interval = "6000ba"
+    learning_rate = 1e-4
 
     tokenizer_file = f"{datafolder}/overall-tokenizer.json"
-    tokenizer = PreTrainedTokenizerFast.from_pretrained(tokenizer_file)
+    tokenizer = PreTrainedTokenizerFast.from_pretrained(
+        tokenizer_file, padding_side="left"
+    )
+
+    print(f"tokenizer length: {len(tokenizer)}")
+
+    data_collator = DataCollatorForLanguageModeling(
+        tokenizer=tokenizer, mlm=False, pad_to_multiple_of=context_window
+    )
 
     dataset = load_dataset(
         "text",
@@ -72,9 +83,7 @@ if __name__ == "__main__":
         sample_by="document",
         keep_linebreaks=True,
         cache_dir=f"{datafolder}/.cache",
-    )
-
-    dataset = dataset.map(
+    ).map(
         create_sliding_windows(
             tokenizer=tokenizer,
             context_window=context_window,
@@ -85,26 +94,21 @@ if __name__ == "__main__":
         remove_columns=["text"],
     )
 
-    train_dataset = dataset["train"]
-    eval_dataset = dataset["eval"]
-
-    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
-
     train_dataloader = DataLoader(
-        train_dataset,
+        dataset["train"],
         shuffle=True,
         batch_size=batch_size,
-        pin_memory=True,
+        pin_memory=False,
         collate_fn=data_collator,
         prefetch_factor=int(batch_size / 8),
         num_workers=cpu_count(),
     )
 
     eval_dataloader = DataLoader(
-        eval_dataset,
+        dataset["eval"],
         shuffle=False,
         batch_size=batch_size,
-        pin_memory=True,
+        pin_memory=False,
         collate_fn=data_collator,
         prefetch_factor=int(batch_size / 8),
         num_workers=cpu_count(),
@@ -118,11 +122,11 @@ if __name__ == "__main__":
 
     config = LlamaConfig(
         vocab_size=tokenizer.vocab_size,
-        num_attention_heads=1,
-        num_key_value_heads=1,
-        num_hidden_layers=6,
-        hidden_size=256,
-        intermediate_size=256,
+        num_attention_heads=2,
+        num_key_value_heads=2,
+        num_hidden_layers=12,
+        hidden_size=512,
+        intermediate_size=512,
         tie_word_embeddings=True,
         rms_norm_eps=1e-5,
         rope_theta=500000,
@@ -142,7 +146,7 @@ if __name__ == "__main__":
     model.to(device)
     model.train()
 
-    optimizer = schedulefree.AdamWScheduleFree(model.parameters(), lr=2e-4)
+    optimizer = schedulefree.AdamWScheduleFree(model.parameters(), lr=learning_rate)
     summary(model)
 
     torch.distributed.init_process_group()
@@ -152,29 +156,29 @@ if __name__ == "__main__":
         optimizers=optimizer,
         train_dataloader=train_dataloader,
         eval_dataloader=[ppl_eval],
-        eval_interval="1500ba",
+        eval_interval=eval_interval,
         max_duration="1ep",
         save_folder=f"checkpoints/{run_name}",
-        save_filename=run_name + "ep{epoch}.pt",
-        save_interval="1500ba",
+        save_interval=eval_interval,
         save_overwrite=False,
         device_train_microbatch_size="auto",
         device="gpu",
         run_name=run_name,
         autoresume=True,
         precision="amp_fp16",
+        console_log_interval=eval_interval,
         loggers=[
-            FileLogger("checkpoints/logs.txt"),
+            FileLogger(f"checkpoints/{run_name}_logs.txt"),
             TensorboardLogger(),
             # NeptuneLogger(
             #     project="blackjack-synthetic",
             #     name=run_name,
-            #     description="Test run #6",
+            #     # description="Test run #6",
             #     source_files="*.py",
             #     upload_artifacts=True,
             #     git_ref=True,
             #     dependencies="infer",
-            #     mode="offline",
+            #     mode="sync",
             # ),
         ],
     )
